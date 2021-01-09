@@ -54,6 +54,7 @@
             <artifactId>storage</artifactId>
             <version>${attach.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.gluonhq.attach</groupId>
             <artifactId>util</artifactId>
