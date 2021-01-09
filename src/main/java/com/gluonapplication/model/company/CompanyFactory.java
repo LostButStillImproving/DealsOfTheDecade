@@ -22,10 +22,23 @@ public class CompanyFactory {
             }
         }
 
+
     public static void main(String[] args) {
         CompanyFactory companyFactory = new CompanyFactory();
         Company smallCompany = companyFactory.getCompany("SMALL");
         Company mediumCompany = companyFactory.getCompany("MEDIUM");
+    }
+
+    public Company getHugeCompany() {
+        return new HugeCompany();
+    }
+
+    public Company getMediumCompany() {
+        return new MediumCompany();
+    }
+
+    public Company getSmallCompany() {
+        return new SmallCompany();
     }
 }
 
