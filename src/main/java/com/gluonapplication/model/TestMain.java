@@ -10,7 +10,6 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        Object lock = new Object();
         Scanner scanner = new Scanner(System.in);
         CompanyFactory companyFactory = new CompanyFactory();
         Company company = companyFactory.getMediumCompany();
