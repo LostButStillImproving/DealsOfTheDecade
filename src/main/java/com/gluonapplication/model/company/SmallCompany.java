@@ -1,5 +1,7 @@
 package com.gluonapplication.model.company;
 
+import com.gluonapplication.model.scenario.Scenario;
+
 public class SmallCompany implements Company {
 
     private Double budgetConstant;
@@ -13,6 +15,11 @@ public class SmallCompany implements Company {
     }
     @Override
     public void updateBudget() {
+
+    }
+
+    @Override
+    public void makeBusinessDecision() {
 
     }
 }

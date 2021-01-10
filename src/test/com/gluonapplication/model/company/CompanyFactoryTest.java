@@ -13,7 +13,6 @@ class CompanyFactoryTest {
         Company hugeCompany = companyFactory.getHugeCompany();
 
         assertTrue(hugeCompany instanceof HugeCompany);
-
     }
 
     @Test
@@ -23,7 +22,6 @@ class CompanyFactoryTest {
         Company mediumCompany = companyFactory.getMediumCompany();
 
         assertTrue(mediumCompany instanceof MediumCompany);
-
     }
 
     @Test
@@ -33,6 +31,5 @@ class CompanyFactoryTest {
         Company smallCompany = companyFactory.getSmallCompany();
 
         assertTrue(smallCompany instanceof SmallCompany);
-
     }
 }

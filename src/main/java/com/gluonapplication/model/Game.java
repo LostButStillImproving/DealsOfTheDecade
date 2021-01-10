@@ -2,9 +2,7 @@ package com.gluonapplication.model;
 
 import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
-
 import static java.lang.Thread.sleep;
-
 public class Game implements Runnable {
 
     CompanyFactory companyFactory = new CompanyFactory();
@@ -17,9 +15,7 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
     }
-
     private void timer() throws InterruptedException {
-
 
         Company mediumCompany = companyFactory.getCompany("MEDIUM");
 
