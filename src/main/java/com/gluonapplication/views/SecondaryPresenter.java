@@ -9,6 +9,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
 public class SecondaryPresenter {
@@ -20,9 +21,21 @@ public class SecondaryPresenter {
     @FXML
     private ImageView cityGraphics;
 
-    //TEXTS
+    @FXML
+    private ImageView reputationImage;
+
+    //Texts
     @FXML
     private Label scenarioDescription;
+    @FXML
+    private Label budgetField;
+    @FXML
+    private Label dateField;
+
+    //PROGRESS BAR
+    @FXML
+    private ProgressBar progressBar;
+
 
     //CHOICES BUTTONS
     @FXML
@@ -33,8 +46,6 @@ public class SecondaryPresenter {
     private Button choiceThree;
     @FXML
     private Button choiceFour;
-
-
 
     public void initialize() {
         //Hardcoded filler stuff
