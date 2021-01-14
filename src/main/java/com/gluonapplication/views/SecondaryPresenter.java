@@ -7,13 +7,46 @@ import com.gluonhq.charm.glisten.control.FloatingActionButton;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class SecondaryPresenter {
 
     @FXML
     private View secondary;
 
+    //GRAPHICS
+    @FXML
+    private ImageView cityGraphics;
+
+    //TEXTS
+    @FXML
+    private Label scenarioDescription;
+
+    //CHOICES BUTTONS
+    @FXML
+    private Button choiceOne;
+    @FXML
+    private Button choiceTwo;
+    @FXML
+    private Button choiceThree;
+    @FXML
+    private Button choiceFour;
+
+
+
     public void initialize() {
+        //Hardcoded filler stuff
+        scenarioDescription.setText("Scenario: \n" +
+                "10 of your employees has caught the\n" +
+                "china virus, what do you do?");
+
+        choiceOne.setText("It's their own fault!\nFire them!");
+        choiceTwo.setText("Send them home\nwith pay");
+        choiceThree.setText("Blame China!");
+        choiceFour.setText("Do nothing");
+
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
         
         FloatingActionButton fab = new FloatingActionButton(MaterialDesignIcon.INFO.text,

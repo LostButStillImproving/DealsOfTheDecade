@@ -10,11 +10,8 @@ import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.Optional;
-
-import static com.sun.javafx.PlatformUtil.*;
 
 public class GluonApplication extends MobileApplication {
 

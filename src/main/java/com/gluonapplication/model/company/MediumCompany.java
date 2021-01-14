@@ -11,7 +11,6 @@ public class MediumCompany implements Company {
     @Override
     public void updateBudgetConstant() {
     }
-
     @Override
     public synchronized void updateBudget() {
         budget.incrementAndGet();
