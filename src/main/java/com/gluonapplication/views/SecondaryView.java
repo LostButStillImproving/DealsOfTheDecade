@@ -11,7 +11,7 @@ public class SecondaryView {
             View view = FXMLLoader.load(SecondaryView.class.getResource("secondary.fxml"));
             return view;
         } catch (IOException e) {
-            System.out.println("IOException: " + e);
+            System.out.println("IOException: " + e.getMessage());
             return new View();
         }
     }

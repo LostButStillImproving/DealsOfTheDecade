@@ -65,7 +65,7 @@ public class GluonApplication extends MobileApplication {
         };
 
         // define service factory for desktop
-        ServiceFactory<StorageService> storageServiceFactory = new ServiceFactory<StorageService>() {
+        ServiceFactory<StorageService> storageServiceFactory = new ServiceFactory<>() {
 
             @Override
             public Class<StorageService> getServiceType() {

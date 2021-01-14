@@ -11,7 +11,6 @@ public class PrimaryPresenter {
 
     @FXML
     private View primary;
-
     @FXML
     private Label label;
 
