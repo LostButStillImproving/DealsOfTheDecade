@@ -36,7 +36,6 @@ public class SecondaryPresenter {
     @FXML
     private ProgressBar progressBar;
 
-
     //CHOICES BUTTONS
     @FXML
     private Button choiceOne;
@@ -59,19 +58,13 @@ public class SecondaryPresenter {
         choiceFour.setText("Do nothing");
 
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
-        
-        FloatingActionButton fab = new FloatingActionButton(MaterialDesignIcon.INFO.text,
-                e -> System.out.println("Info"));
-        fab.showOn(secondary);
-        
+
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().getDrawer().open()));
                 appBar.setTitleText("Secondary");
-                appBar.getActionItems().add(MaterialDesignIcon.FAVORITE.button(e -> 
-                        System.out.println("Favorite")));
             }
         });
     }
