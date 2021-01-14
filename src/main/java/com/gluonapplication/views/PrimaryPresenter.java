@@ -22,12 +22,9 @@ public class PrimaryPresenter {
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().getDrawer().open()));
                 appBar.setTitleText("Primary");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e ->
-                        System.out.println("Search")));
             }
         });
     }
-    
     @FXML
     void buttonClick() {
         label.setText("Hello JavaFX Universe!");
