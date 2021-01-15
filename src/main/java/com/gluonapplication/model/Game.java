@@ -5,19 +5,41 @@ import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.scenario.Scenario;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 public class Game implements Runnable {
 
     public CompanyFactory companyFactory = new CompanyFactory();
-    ArrayList<Scenario> scenarios = new ArrayList<>();
+
+    public ArrayList<Scenario> getScenarios() {
+        return scenarios;
+    }
+
+    public ArrayList<Scenario> scenarios = new ArrayList<>();
+    private Queue<Scenario> scenarioQueue = new ArrayDeque<>();
+
+    private Scenario currentScenario;
+
+    public Company company;
+
+    public void setCurrentScenario() {
+        if (!scenarioQueue.isEmpty()) {
+            this.currentScenario = scenarioQueue.poll();
+        }
+    }
+
+    public Scenario getCurrentScenario() {
+        return currentScenario;
+    }
 
     public Game() {
         buildScenarios();
+        buildScenarioQueue();
+        setCurrentScenario();
     }
 
-    public void buildScenarios() {
+    private void buildScenarios() {
 
         Scenario coronaScenario = new Scenario("Scenario: \n" +
                 "10 of your employees has caught the\n" +
@@ -27,6 +49,9 @@ public class Game implements Runnable {
         coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
         coronaScenario.addChoice(new Choice("Do nothing", 0., 0., 0., 0.));
         this.scenarios.add(coronaScenario);
+    }
+    private void buildScenarioQueue() {
+        scenarioQueue.addAll(getScenarios());
     }
 
     @Override
@@ -40,6 +65,7 @@ public class Game implements Runnable {
     private void timer() throws InterruptedException {
 
         Company mediumCompany = companyFactory.getCompany("MEDIUM");
+        company = mediumCompany;
 
         while (true){
             sleep(1000);

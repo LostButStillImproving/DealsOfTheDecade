@@ -1,3 +1,4 @@
+/*
 package com.gluonapplication.model;
 
 import com.gluonapplication.model.company.Company;
@@ -10,7 +11,8 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+       */
+/* Scanner scanner = new Scanner(System.in);
         CompanyFactory companyFactory = new CompanyFactory();
         Company company = companyFactory.getMediumCompany();
 
@@ -30,7 +32,7 @@ public class TestMain {
                 System.out.println("Make a decision");
                 String input = scanner.nextLine();
                 if (input.equals("b")) {
-                        company.makeBusinessDecision();
+                        company.makeBusinessDecision(event.getPickResult().getIntersectedNode().getId());
                     System.out.println(company);
                 } else break;
             }
@@ -39,5 +41,7 @@ public class TestMain {
 
         t1.start();
         t2.start();
-    }
-}
+    }*//*
+
+//}
+*/

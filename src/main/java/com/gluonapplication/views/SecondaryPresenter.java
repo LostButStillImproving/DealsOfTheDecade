@@ -1,14 +1,15 @@
 package com.gluonapplication.views;
 
 import com.gluonapplication.GameController;
-import com.gluonapplication.model.Game;
+import com.gluonapplication.model.scenario.Scenario;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -51,24 +52,16 @@ public class SecondaryPresenter {
     @FXML
     private Button choiceFour;
 
-    private GameController gameController = new GameController();
+    private GameController gameController;
 
     public void initialize() {
-        gameController.t1.start();
-
+        gameController = new GameController();
 
         //Hardcoded filler stuff
-        scenarioDescription.setText("Scenario: \n" +
-                "10 of your employees has caught the\n" +
-                "china virus, what do you do?");
-
-        choiceOne.setText("It's their own fault!\nFire them!");
-        choiceTwo.setText("Send them home\nwith pay");
-        choiceThree.setText("Blame China!");
-        choiceFour.setText("Do nothing");
+        updateScenarioDescription();
+        updateChoiceButtons();
 
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
-
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -77,5 +70,31 @@ public class SecondaryPresenter {
                 appBar.setTitleText("Secondary");
             }
         });
+    }
+
+    private void updateScenarioDescription() {
+        scenarioDescription.setText(getScenarioText());
+    }
+
+    private String getScenarioText() {
+        return gameController.getGame().getCurrentScenario().getScenarioText();
+    }
+
+    private String getChoiceDescription(int i) {
+        return gameController.getGame().getCurrentScenario().getChoices().get(i).getDescription();
+    }
+    private void updateChoiceButtons() {
+        choiceOne.setText(getChoiceDescription(0));
+        choiceTwo.setText(getChoiceDescription(1));
+        choiceThree.setText(getChoiceDescription(2));
+        choiceFour.setText(getChoiceDescription(3));
+    }
+    @FXML
+    public void makeBusinessDecision(Event event) {
+        final Node source = (Node) event.getSource();
+        String id = source.getId();
+        gameController.game.company.makeBusinessDecision(id,gameController.getGame());
+        updateScenarioDescription();
+        updateChoiceButtons();
     }
 }

@@ -10,11 +10,24 @@ public class Scenario {
     private String scenarioText;
     private ArrayList<Choice> choices = new ArrayList<>();
 
-    public Scenario(String scenarioText, int id) {
-        this.scenarioText = scenarioText;
+    public Scenario(String scenarioTextDescription, int id) {
+        scenarioText = scenarioTextDescription;
     }
 
     public void addChoice(Choice choice) {
         this.choices.add(choice);
+    }
+
+    public String getScenarioText() {
+        return scenarioText;
+    }
+
+    public ArrayList<Choice> getChoices() {
+        return choices;
+    }
+
+    public static void main(String[] args) {
+        Scenario scenario = new Scenario("H", 2);
+        System.out.println(scenario.getScenarioText());
     }
 }

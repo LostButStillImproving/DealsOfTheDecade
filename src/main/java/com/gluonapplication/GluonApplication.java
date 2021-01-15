@@ -35,6 +35,7 @@ public class GluonApplication extends MobileApplication {
     }
 
     public static void main(String args[]) {
+
         System.setProperty("javafx.platform", "Desktop");
 
         // define service for desktop
