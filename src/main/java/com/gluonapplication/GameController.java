@@ -17,9 +17,7 @@ public class GameController {
         t2.start();
     }
 
-    public Thread t1 = new Thread(() -> {
-            game.run();
-    });
+    public Thread t1 = new Thread(() -> game.run());
     public Thread t2 = new Thread(() -> {
         while (true) {
             try {

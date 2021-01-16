@@ -34,7 +34,7 @@ public class GluonApplication extends MobileApplication {
         ((Stage) scene.getWindow()).getIcons().add(new Image(GluonApplication.class.getResourceAsStream("/icon.png")));
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         System.setProperty("javafx.platform", "Desktop");
 
@@ -54,13 +54,11 @@ public class GluonApplication extends MobileApplication {
 
             @Override
             public boolean isExternalStorageWritable() {
-                //noinspection ConstantConditions
                 return getPrivateStorage().get().canWrite();
             }
 
             @Override
             public boolean isExternalStorageReadable() {
-                //noinspection ConstantConditions
                 return getPrivateStorage().get().canRead();
             }
         };

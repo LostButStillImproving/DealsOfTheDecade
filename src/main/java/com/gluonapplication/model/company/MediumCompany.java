@@ -46,7 +46,7 @@ public class MediumCompany implements Company {
 
     @Override
     public String toString() {
-        return "MediumCompany{" +
+        return  this.getClass().getSimpleName()+"{" +
                 "budgetConstant=" + budgetConstant +
                 ", budget=" + budget +
                 ", IQ=" + IQ +

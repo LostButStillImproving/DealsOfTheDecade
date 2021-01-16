@@ -4,41 +4,37 @@ import com.gluonapplication.model.choice.Choice;
 import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.scenario.Scenario;
-
 import java.util.*;
-
 import static java.lang.Thread.sleep;
 public class Game implements Runnable {
 
-    public CompanyFactory companyFactory = new CompanyFactory();
+    private Boolean gameDone = false;
 
+    public void setGameDone(Boolean gameDone) {
+        this.gameDone = gameDone;
+    }
+
+    public CompanyFactory companyFactory = new CompanyFactory();
     public ArrayList<Scenario> getScenarios() {
         return scenarios;
     }
-
     public ArrayList<Scenario> scenarios = new ArrayList<>();
     private Queue<Scenario> scenarioQueue = new ArrayDeque<>();
-
     private Scenario currentScenario;
-
     public Company company;
-
     public void setCurrentScenario() {
         if (!scenarioQueue.isEmpty()) {
             this.currentScenario = scenarioQueue.poll();
         }
     }
-
     public Scenario getCurrentScenario() {
         return currentScenario;
     }
-
     public Game() {
         buildScenarios();
         buildScenarioQueue();
         setCurrentScenario();
     }
-
     private void buildScenarios() {
 
         Scenario coronaScenario = new Scenario("Scenario: \n" +
@@ -62,7 +58,6 @@ public class Game implements Runnable {
     private void buildScenarioQueue() {
         scenarioQueue.addAll(getScenarios());
     }
-
     @Override
     public void run() {
         try {
@@ -73,13 +68,12 @@ public class Game implements Runnable {
     }
     private void timer() throws InterruptedException {
 
-        Company mediumCompany = companyFactory.getCompany("MEDIUM");
-        company = mediumCompany;
+        company = companyFactory.getCompany("MEDIUM");
 
-        while (true){
+        do {
             sleep(1000);
-            mediumCompany.updateBudget();
-            System.out.println(mediumCompany);
-        }
+            company.updateBudget();
+            System.out.println(company);
+        } while (!gameDone);
     }
 }
