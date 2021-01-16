@@ -49,6 +49,15 @@ public class Game implements Runnable {
         coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
         coronaScenario.addChoice(new Choice("Do nothing", 0., 0., 0., 0.));
         this.scenarios.add(coronaScenario);
+
+        Scenario testScenario = new Scenario("Scenario: \n" +
+                "10 of your employees has caught the\n" +
+                "china virus, what do you do?", 1);
+        testScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0));
+        testScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90.));
+        testScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
+        testScenario.addChoice(new Choice("Do nothing1111", 0., 0., 0., 0.));
+        this.scenarios.add(testScenario);
     }
     private void buildScenarioQueue() {
         scenarioQueue.addAll(getScenarios());
