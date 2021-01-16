@@ -9,6 +9,12 @@ public class GameController {
     public Game game = new Game();
 
     public Game getGame() {
+        try {
+            System.out.println(game.getCompany().getClass().getSimpleName());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         return game;
     }
 

@@ -7,10 +7,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HugeCompany implements Company{
 
-    private Double budgetConstant = 0.1;
+    private final Double budgetConstant = 0.1;
     private int IQ = 110;
     private Double reputation = 2.5;
-    private AtomicInteger budget = new AtomicInteger(10000);
+    private final AtomicInteger budget = new AtomicInteger(10000);
 
     @Override
     public void updateBudgetConstant() {
@@ -41,6 +41,10 @@ public class HugeCompany implements Company{
         this.budget.addAndGet( choice.getBudgetEffect().intValue());
         this.IQ += choice.getIQEffect();
         this.reputation += choice.getRepEffect();
+    }
+    @Override
+    public AtomicInteger getBudget() {
+        return budget;
     }
 
     @Override

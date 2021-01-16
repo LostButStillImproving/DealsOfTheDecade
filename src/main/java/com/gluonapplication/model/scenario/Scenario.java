@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Scenario {
 
     private int id;
-    private String scenarioText;
-    private ArrayList<Choice> choices = new ArrayList<>();
+    private final String scenarioText;
+    private final ArrayList<Choice> choices = new ArrayList<>();
 
     public Scenario(String scenarioTextDescription, int id) {
         scenarioText = scenarioTextDescription;

@@ -7,10 +7,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class YourMom implements Company{
 
-    private Double budgetConstant = 0.1;
+    private final Double budgetConstant = 0.1;
     private int IQ = 110;
     private Double reputation = 2.5;
-    private AtomicInteger budget = new AtomicInteger(10000);
+    private final AtomicInteger budget = new AtomicInteger(10000);
 
     @Override
     public void updateBudgetConstant() {
@@ -19,6 +19,12 @@ public class YourMom implements Company{
     public synchronized void updateBudget() {
         budget.incrementAndGet();
     }
+
+    @Override
+    public AtomicInteger getBudget() {
+        return budget;
+    }
+
     @Override
     public synchronized void makeBusinessDecision(String id, Game game) {
         if (id.equals("choiceOne")) {

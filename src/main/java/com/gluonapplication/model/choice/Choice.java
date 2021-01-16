@@ -2,11 +2,11 @@ package com.gluonapplication.model.choice;
 
 public class Choice {
 
-    private String description;
-    private Double budgetEffect; // multiplicative
-    private Double repEffect;  // additive
-    private Double IQEffect; // additive
-    private Double IQLimit; // FIND online grænser for dumme dyr og smarte mennesker
+    private final String description;
+    private final Double budgetEffect; // multiplicative
+    private final Double repEffect;  // additive
+    private final Double IQEffect; // additive
+    private final Double IQLimit; // FIND online grænser for dumme dyr og smarte mennesker
 
     public Double getBudgetEffect() {
         return budgetEffect;

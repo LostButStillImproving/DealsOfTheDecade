@@ -7,14 +7,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class SmallCompany implements Company {
 
-    private Double budgetConstant = 0.1;
+    private final Double budgetConstant = 0.1;
     private int IQ = 110;
     private Double reputation = 2.5;
-    private AtomicInteger budget = new AtomicInteger(10000);
+    private final AtomicInteger budget = new AtomicInteger(10000);
+
+    public AtomicInteger getBudget() {
+        return budget;
+    }
 
     @Override
-    public void updateBudgetConstant() {
-    }
+    public void updateBudgetConstant() { }
     @Override
     public synchronized void updateBudget() {
         budget.incrementAndGet();

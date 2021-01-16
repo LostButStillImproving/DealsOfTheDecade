@@ -1,7 +1,6 @@
 package com.gluonapplication.views;
 
 import com.gluonapplication.GameController;
-import com.gluonapplication.model.scenario.Scenario;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -14,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-
-import static java.lang.Thread.sleep;
 
 public class SecondaryPresenter {
 
@@ -71,15 +68,12 @@ public class SecondaryPresenter {
             }
         });
     }
-
     private void updateScenarioDescription() {
         scenarioDescription.setText(getScenarioText());
     }
-
     private String getScenarioText() {
         return gameController.getGame().getCurrentScenario().getScenarioText();
     }
-
     private String getChoiceDescription(int i) {
         return gameController.getGame().getCurrentScenario().getChoices().get(i).getDescription();
     }
@@ -87,13 +81,15 @@ public class SecondaryPresenter {
         choiceOne.setText(getChoiceDescription(0));
         choiceTwo.setText(getChoiceDescription(1));
         choiceThree.setText(getChoiceDescription(2));
+        System.out.println(getChoiceDescription(3));
         choiceFour.setText(getChoiceDescription(3));
     }
     @FXML
     public void makeBusinessDecision(Event event) {
+
         final Node source = (Node) event.getSource();
         String id = source.getId();
-        gameController.game.company.makeBusinessDecision(id,gameController.getGame());
+        gameController.getGame().getCompany().makeBusinessDecision(id,gameController.getGame());
         updateScenarioDescription();
         updateChoiceButtons();
     }
