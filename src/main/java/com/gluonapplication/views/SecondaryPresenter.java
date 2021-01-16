@@ -6,6 +6,7 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,7 +16,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
 public class SecondaryPresenter {
-
 
     @FXML
     private View secondary;
@@ -49,14 +49,17 @@ public class SecondaryPresenter {
     @FXML
     private Button choiceFour;
 
+    private Boolean choiceMade = false;
+
     private GameController gameController;
 
     public void initialize() {
-        gameController = new GameController();
+        gameController = new GameController("SMALL");
 
         //Hardcoded filler stuff
         updateScenarioDescription();
         updateChoiceButtons();
+        spawnTimer();
 
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -68,29 +71,65 @@ public class SecondaryPresenter {
             }
         });
     }
-    private void updateScenarioDescription() {
-        scenarioDescription.setText(getScenarioText());
-    }
+
     private String getScenarioText() {
         return gameController.getGame().getCurrentScenario().getScenarioText();
     }
     private String getChoiceDescription(int i) {
         return gameController.getGame().getCurrentScenario().getChoices().get(i).getDescription();
     }
+    private void updateScenarioDescription() {
+        Platform.runLater(() -> {
+            scenarioDescription.setText(getScenarioText());
+        });
+
+    }
     private void updateChoiceButtons() {
-        choiceOne.setText(getChoiceDescription(0));
-        choiceTwo.setText(getChoiceDescription(1));
-        choiceThree.setText(getChoiceDescription(2));
-        System.out.println(getChoiceDescription(3));
-        choiceFour.setText(getChoiceDescription(3));
+
+        Platform.runLater(() -> {
+            choiceOne.setText(getChoiceDescription(0));
+            choiceTwo.setText(getChoiceDescription(1));
+            choiceThree.setText(getChoiceDescription(2));
+            choiceFour.setText(getChoiceDescription(3));
+        });
     }
     @FXML
     public void makeBusinessDecision(Event event) {
 
         final Node source = (Node) event.getSource();
-        String id = source.getId();
-        gameController.getGame().getCompany().makeBusinessDecision(id,gameController.getGame());
+        var id = source.getId();
+        var game = gameController.getGame();
+        var company = game.getCompany();
+
+        company.makeBusinessDecision(id,game);
+        this.choiceMade = true;
+
         updateScenarioDescription();
         updateChoiceButtons();
+    }
+
+    public void makeDefaultBusinessDecision() {
+        var game = gameController.getGame();
+        var company = game.getCompany();
+        company.makeBusinessDecision("choiceFour",game);
+
+    }
+
+    private void spawnTimer() {
+
+        Thread t= new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (!choiceMade) {
+                makeDefaultBusinessDecision();
+                updateScenarioDescription();
+                updateChoiceButtons();
+            }
+
+        });
+        t.start();
     }
 }

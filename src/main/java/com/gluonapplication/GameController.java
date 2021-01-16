@@ -6,7 +6,7 @@ import static java.lang.Thread.sleep;
 
 public class GameController {
 
-    public Game game = new Game();
+    public Game game;
 
     public Game getGame() {
         try {
@@ -18,13 +18,14 @@ public class GameController {
         return game;
     }
 
-    public GameController() {
+    public GameController(String companyType) {
+        game = new Game(companyType);
         t1.start();
-        t2.start();
+        //t2.start();
     }
 
     public Thread t1 = new Thread(() -> game.run());
-    public Thread t2 = new Thread(() -> {
+   /* public Thread t2 = new Thread(() -> {
         while (true) {
             try {
                 sleep(2000);
@@ -32,5 +33,5 @@ public class GameController {
                 e.printStackTrace();
             }
         }
-    });
+    });*/
 }

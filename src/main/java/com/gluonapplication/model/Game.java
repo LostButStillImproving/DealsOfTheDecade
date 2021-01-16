@@ -26,7 +26,18 @@ public class Game implements Runnable {
     public Scenario getCurrentScenario() {
         return currentScenario;
     }
-    public Game() {
+    public Game(String companyType) {
+
+        if (companyType.equals("SMALL")) {
+            company = companyFactory.getSmallCompany();
+        }
+        if (companyType.equals("MEDIUM")) {
+            company = companyFactory.getMediumCompany();
+        }
+        if (companyType.equals("HUGE")) {
+            company = companyFactory.getHugeCompany();
+        }
+
         buildScenarios();
         buildScenarioQueue();
         setCurrentScenario();
@@ -72,8 +83,6 @@ public class Game implements Runnable {
         }
     }
     private void timer() throws InterruptedException {
-
-        company = companyFactory.getMediumCompany();
 
         do {
             sleep(1000);

@@ -34,6 +34,7 @@ public class HugeCompany implements Company{
             applyChoiceImpact(game, 4);
 
         }
+        game.setCurrentScenario();
     }
 
     private void applyChoiceImpact(Game game, int choiceNumber) {
