@@ -3,6 +3,7 @@ package com.gluonapplication.model;
 import com.gluonapplication.model.choice.Choice;
 import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
+import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
 
 import java.util.*;
@@ -10,6 +11,15 @@ import java.util.*;
 import static java.lang.Thread.sleep;
 public class Game implements Runnable {
 
+    private List<GameObserver> observers = new ArrayList<>();
+    public void attach(GameObserver observer){
+        observers.add(observer);
+    }
+    public void notifyAllObservers(){
+        for (GameObserver observer : observers) {
+            observer.update();
+        }
+    }
     public CompanyFactory companyFactory = new CompanyFactory();
     public ArrayList<Scenario> getScenarios() {
         return scenarios;
@@ -21,6 +31,7 @@ public class Game implements Runnable {
     public void setCurrentScenario() {
         if (!scenarioQueue.isEmpty()) {
             this.currentScenario = scenarioQueue.poll();
+            notifyAllObservers();
         }
     }
     public Scenario getCurrentScenario() {
@@ -62,7 +73,7 @@ public class Game implements Runnable {
         coronaScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0));
         coronaScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90.));
         coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
-        coronaScenario.addChoice(new Choice("Do nothing", 0., 0., 0., 0.));
+        coronaScenario.addChoice(new Choice("Do nothing", -5000., 0., 0., 0.));
         this.scenarios.add(coronaScenario);
 
         Scenario testScenario = new Scenario("Scenario: \n" +
@@ -71,7 +82,7 @@ public class Game implements Runnable {
         testScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0));
         testScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90.));
         testScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
-        testScenario.addChoice(new Choice("Do nothing1111", 0., 0., 0., 0.));
+        testScenario.addChoice(new Choice("Do nothing1111", 50., 0., 0., 0.));
         this.scenarios.add(testScenario);
     }
     @Override
@@ -90,4 +101,5 @@ public class Game implements Runnable {
             System.out.println(company);
         } while (!gameDone());
     }
+
 }

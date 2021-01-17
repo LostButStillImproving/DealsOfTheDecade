@@ -1,6 +1,8 @@
 package com.gluonapplication.views;
 
 import com.gluonapplication.GameController;
+import com.gluonapplication.model.Game;
+import com.gluonapplication.model.company.GameObserver;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -15,7 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
-public class SecondaryPresenter {
+import static java.lang.Thread.sleep;
+
+public class SecondaryPresenter extends GameObserver {
 
     @FXML
     private View secondary;
@@ -53,12 +57,14 @@ public class SecondaryPresenter {
 
     private GameController gameController;
 
+    private Game game;
+
     public void initialize() {
         gameController = new GameController("SMALL");
+        this.game = gameController.getGame();
+        game.attach(this);
 
-        //Hardcoded filler stuff
-        updateScenarioDescription();
-        updateChoiceButtons();
+        update();
         spawnTimer();
 
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
@@ -70,6 +76,17 @@ public class SecondaryPresenter {
                 appBar.setTitleText("Secondary");
             }
         });
+        Thread t2 = new Thread(() -> {
+            while (true) {
+                try {
+                    sleep(1000);
+                    update();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t2.start();
     }
 
     private String getScenarioText() {
@@ -77,21 +94,6 @@ public class SecondaryPresenter {
     }
     private String getChoiceDescription(int i) {
         return gameController.getGame().getCurrentScenario().getChoices().get(i).getDescription();
-    }
-    private void updateScenarioDescription() {
-        Platform.runLater(() -> {
-            scenarioDescription.setText(getScenarioText());
-        });
-
-    }
-    private void updateChoiceButtons() {
-
-        Platform.runLater(() -> {
-            choiceOne.setText(getChoiceDescription(0));
-            choiceTwo.setText(getChoiceDescription(1));
-            choiceThree.setText(getChoiceDescription(2));
-            choiceFour.setText(getChoiceDescription(3));
-        });
     }
     @FXML
     public void makeBusinessDecision(Event event) {
@@ -103,9 +105,6 @@ public class SecondaryPresenter {
 
         company.makeBusinessDecision(id,game);
         this.choiceMade = true;
-
-        updateScenarioDescription();
-        updateChoiceButtons();
     }
 
     public void makeDefaultBusinessDecision() {
@@ -119,17 +118,49 @@ public class SecondaryPresenter {
 
         Thread t= new Thread(() -> {
             try {
-                Thread.sleep(5000);
+                sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             if (!choiceMade) {
                 makeDefaultBusinessDecision();
-                updateScenarioDescription();
-                updateChoiceButtons();
             }
 
         });
         t.start();
+    }
+
+    @Override
+    public void update() {
+
+        Platform.runLater(() -> {
+            updateBudgetField();
+            updateRepIcon();
+            updateDateField();
+            updateScenarioDescription();
+            updateChoiceButtons();
+        });
+    }
+
+    private void updateDateField() {
+    }
+
+    private void updateRepIcon() {
+    }
+
+    private void updateBudgetField() {
+        budgetField.setText(String.valueOf(game.getCompany().getBudget().get()));
+    }
+
+    private void updateScenarioDescription() {
+        scenarioDescription.setText(getScenarioText());
+
+    }
+    private void updateChoiceButtons() {
+
+        choiceOne.setText(getChoiceDescription(0));
+        choiceTwo.setText(getChoiceDescription(1));
+        choiceThree.setText(getChoiceDescription(2));
+        choiceFour.setText(getChoiceDescription(3));
     }
 }

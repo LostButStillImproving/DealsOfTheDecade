@@ -40,6 +40,7 @@ public class YourMom implements Company{
             applyChoiceImpact(game, 4);
 
         }
+
     }
 
     private void applyChoiceImpact(Game game, int choiceNumber) {

@@ -25,9 +25,4 @@ public class Scenario {
     public ArrayList<Choice> getChoices() {
         return choices;
     }
-
-    public static void main(String[] args) {
-        Scenario scenario = new Scenario("H", 2);
-        System.out.println(scenario.getScenarioText());
-    }
 }
