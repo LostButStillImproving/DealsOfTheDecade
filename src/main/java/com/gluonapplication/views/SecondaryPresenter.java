@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Thread.sleep;
 
@@ -26,6 +27,9 @@ public class SecondaryPresenter extends GameObserver {
 
     @FXML
     private View secondary;
+
+    @FXML
+    private Label reputationLabel;
 
     //GRAPHICS
     @FXML
@@ -67,9 +71,12 @@ public class SecondaryPresenter extends GameObserver {
         this.game = gameController.getGame();
         game.attach(this);
 
+
+        //Thanks Anders Hjordrup for ";"
+        reputationLabel.setStyle("-fx-font-family: '8-bit Operator+ 8'; -fx-font-weight: bold");
+
         update();
         spawnTimer();
-
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
@@ -120,13 +127,22 @@ public class SecondaryPresenter extends GameObserver {
     }
 
     private void spawnTimer() {
-
+        AtomicReference<Double> progress = new AtomicReference<>((double) 0);
         Thread t= new Thread(() -> {
-            try {
-                sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (true) {
+
+                try {
+                    sleep(50);
+                    progress.updateAndGet(v -> v + 0.005);
+                    progressBar.setProgress(progress.get());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (progress.get() == 1) {
+                    break;
+                }
             }
+
             if (!choiceMade) {
                 makeDefaultBusinessDecision();
             }

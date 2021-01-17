@@ -13,7 +13,8 @@ import java.util.*;
 import static java.lang.Thread.sleep;
 public class Game implements Runnable {
 
-    private List<GameObserver> observers = new ArrayList<>();
+    public Company company;
+    private final List<GameObserver> observers = new ArrayList<>();
     public void attach(GameObserver observer){
         observers.add(observer);
     }
@@ -28,10 +29,8 @@ public class Game implements Runnable {
     }
     public ArrayList<Scenario> scenarios = new ArrayList<>();
     private final Queue<Scenario> scenarioQueue = new ArrayDeque<>();
-
     private LocalDate date = LocalDate.of(2020,1,1);
     private Scenario currentScenario;
-    public Company company;
 
     private boolean decisionRound = true;
     public void setCurrentScenario() {
@@ -89,7 +88,7 @@ public class Game implements Runnable {
         Scenario testScenario = new Scenario("Scenario: \n" +
                 "10 of your employees has caught the\n" +
                 "china virus, what do you do?", 1);
-        testScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0));
+        testScenario.addChoice(new Choice("It's their own fault!\nFire them!", 100000., -0.5, -5.0, 0.0));
         testScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90.));
         testScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
         testScenario.addChoice(new Choice("Do nothing1111", 50., 0., 0., 0.));
@@ -99,6 +98,7 @@ public class Game implements Runnable {
     private void increaseDate() {
         date = date.plusDays(1);
     }
+
     @Override
     public void run() {
         try {
@@ -110,9 +110,10 @@ public class Game implements Runnable {
     private void timer() throws InterruptedException {
 
         do {
-            sleep(500);
+            sleep(1000);
             if (decisionRound) {
                 getCompany().updateBudget();
+                getCompany().updateBudgetConstant();
                 increaseDate();
                 notifyAllObservers();
             }

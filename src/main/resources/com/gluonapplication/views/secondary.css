@@ -1,3 +1,9 @@
 .view {
-
+    -fx-font-family: "8bitOperatorPlus8-Regular";
 }
+@font-face {
+    font-family: '8bitOperatorPlus8-Regular';
+    src: url('font/8bitOperatorPlus8-Regular.ttf');
+}
+
+

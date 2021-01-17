@@ -3,24 +3,54 @@ package com.gluonapplication.model.company;
 import com.gluonapplication.model.Game;
 import com.gluonapplication.model.choice.Choice;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SmallCompany implements Company {
 
-    private final Double budgetConstant = 0.1;
+    private Double budgetConstant = 1.1;
     private int IQ = 110;
     private Double reputation = 2.5;
     private final AtomicInteger budget = new AtomicInteger(10000);
+
+    private Boolean hasBecomeRich = false;
 
     public AtomicInteger getBudget() {
         return budget;
     }
 
+    public void setHasBecomeRich() {
+        hasBecomeRich = true;
+    }
+
     @Override
-    public void updateBudgetConstant() { }
+    public void updateBudgetConstant() {
+
+        int budget = this.budget.get();
+
+        if (budget <= 10000) {
+            setBudgetConstant(1.1);
+        } else if (budget < 50000) {
+            setBudgetConstant(1.2);
+        } else if (budget < 100000) {
+            setBudgetConstant(1.3);
+        } else if (budget < 500000) {
+            setBudgetConstant(1.4);
+        } else setBudgetConstant(1.5);
+
+        if (budget > 10000) setHasBecomeRich();
+    }
+
+    private void setBudgetConstant(double budgetConstant) {
+
+        this.budgetConstant = budgetConstant;
+
+    }
+
     @Override
     public synchronized void updateBudget() {
-        budget.incrementAndGet();
+        int budgetIncrease = (int) (this.budgetConstant * 100);
+        budget.addAndGet(budgetIncrease);
     }
     @Override
     public synchronized void makeBusinessDecision(String id, Game game) {

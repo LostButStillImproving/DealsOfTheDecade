@@ -26,9 +26,9 @@
             <Button fx:id="choiceTwo" layoutX="188.0" layoutY="385.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
             <Button fx:id="choiceThree" layoutX="26.0" layoutY="469.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
             <Label fx:id="scenarioDescription" alignment="TOP_LEFT" ellipsisString="\\n" layoutX="29.0" layoutY="268.0" prefHeight="91.0" prefWidth="300.0" text="Scenario: 10 of your employees has caught the china virus, what do you do?" />
-            <Label layoutX="247.0" layoutY="4.0" text="Reputation:" textFill="#ffffff">
+            <Label fx:id="reputationLabel" layoutX="109.0" layoutY="124.0" text="Reputation:" textFill="#ffffff">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="8bitOperatorPlus8-Regular" size="31.0" />
                </font>
             </Label>
             <Label layoutX="7.0" layoutY="4.0" text="Budget:" textFill="#ffffff">
