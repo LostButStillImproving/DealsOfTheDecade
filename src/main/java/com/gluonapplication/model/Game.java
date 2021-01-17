@@ -6,6 +6,8 @@ import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Thread.sleep;
@@ -26,8 +28,12 @@ public class Game implements Runnable {
     }
     public ArrayList<Scenario> scenarios = new ArrayList<>();
     private final Queue<Scenario> scenarioQueue = new ArrayDeque<>();
+
+    private LocalDate date = LocalDate.of(2020,1,1);
     private Scenario currentScenario;
     public Company company;
+
+    private boolean decisionRound = true;
     public void setCurrentScenario() {
         if (!scenarioQueue.isEmpty()) {
             this.currentScenario = scenarioQueue.poll();
@@ -61,6 +67,10 @@ public class Game implements Runnable {
     public Company getCompany() {
         return this.company;
     }
+
+    public LocalDate getDate() {
+        return date;
+    }
     private void buildScenarioQueue() {
         scenarioQueue.addAll(getScenarios());
     }
@@ -85,6 +95,10 @@ public class Game implements Runnable {
         testScenario.addChoice(new Choice("Do nothing1111", 50., 0., 0., 0.));
         this.scenarios.add(testScenario);
     }
+
+    private void increaseDate() {
+        date = date.plusDays(1);
+    }
     @Override
     public void run() {
         try {
@@ -96,10 +110,17 @@ public class Game implements Runnable {
     private void timer() throws InterruptedException {
 
         do {
-            sleep(1000);
-            company.updateBudget();
+            sleep(500);
+            if (decisionRound) {
+                getCompany().updateBudget();
+                increaseDate();
+                notifyAllObservers();
+            }
             System.out.println(company);
         } while (!gameDone());
     }
 
+    public void flipIsDecisionRound() {
+        decisionRound = !decisionRound;
+    }
 }

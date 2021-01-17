@@ -36,7 +36,13 @@ public class MediumCompany implements Company {
             applyChoiceImpact(game, 4);
 
         }
+        game.flipIsDecisionRound();
         game.setCurrentScenario();
+    }
+
+    @Override
+    public double getReputation() {
+        return this.reputation;
     }
 
     private void applyChoiceImpact(Game game, int choiceNumber) {

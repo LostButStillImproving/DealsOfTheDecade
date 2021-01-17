@@ -12,4 +12,6 @@ public interface Company {
     AtomicInteger getBudget();
 
     void makeBusinessDecision(String id, Game game);
+
+    double getReputation();
 }

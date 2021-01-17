@@ -43,6 +43,11 @@ public class YourMom implements Company{
 
     }
 
+    @Override
+    public double getReputation() {
+        return this.reputation;
+    }
+
     private void applyChoiceImpact(Game game, int choiceNumber) {
         Choice choice = game.getCurrentScenario().getChoices().get(choiceNumber - 1);
         this.budget.addAndGet( choice.getBudgetEffect().intValue());

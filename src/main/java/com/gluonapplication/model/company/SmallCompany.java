@@ -37,14 +37,25 @@ public class SmallCompany implements Company {
             applyChoiceImpact(game, 4);
 
         }
+
         game.setCurrentScenario();
+    }
+
+    @Override
+    public double getReputation() {
+        return this.reputation;
     }
 
     private void applyChoiceImpact(Game game, int choiceNumber) {
         Choice choice = game.getCurrentScenario().getChoices().get(choiceNumber - 1);
         this.budget.addAndGet( choice.getBudgetEffect().intValue());
         this.IQ += choice.getIQEffect();
-        this.reputation += choice.getRepEffect();
+
+        if (!(this.reputation < 0) && !(this.reputation > 5)) {
+            this.reputation += choice.getRepEffect();
+            if (reputation < 0) reputation = 0.;
+            if (reputation > 5) reputation = 5.;
+        }
     }
 
     @Override

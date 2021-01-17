@@ -15,7 +15,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
 
 import static java.lang.Thread.sleep;
 
@@ -104,14 +107,16 @@ public class SecondaryPresenter extends GameObserver {
         var company = game.getCompany();
 
         company.makeBusinessDecision(id,game);
-        this.choiceMade = true;
     }
 
     public void makeDefaultBusinessDecision() {
         var game = gameController.getGame();
         var company = game.getCompany();
         company.makeBusinessDecision("choiceFour",game);
+    }
 
+    public void clickSummaryOK() {
+        gameController.getGame().flipIsDecisionRound();
     }
 
     private void spawnTimer() {
@@ -143,9 +148,36 @@ public class SecondaryPresenter extends GameObserver {
     }
 
     private void updateDateField() {
+        dateField.setText(gameController.getGame().getDate().toString());
     }
 
     private void updateRepIcon() {
+        double reputation = gameController.getGame().getCompany().getReputation();
+        if (reputation <= 1.0) {
+            File file = new File("src/main/resources/graphics/reputation/veryangry.png");
+            Image image = new Image(file.toURI().toString());
+            reputationImage.setImage(image);
+        }
+        else if (reputation <= 2.0) {
+            File file = new File("src/main/resources/graphics/reputation/angry.png");
+            Image image = new Image(file.toURI().toString());
+            reputationImage.setImage(image);
+        }
+        else if (reputation <= 3.0) {
+            File file = new File("src/main/resources/graphics/reputation/neutral.png");
+            Image image = new Image(file.toURI().toString());
+            reputationImage.setImage(image);
+        }
+        else if (reputation <= 4.0) {
+            File file = new File("src/main/resources/graphics/reputation/happy.png");
+            Image image = new Image(file.toURI().toString());
+            reputationImage.setImage(image);
+        }
+        else if (reputation <= 5.0) {
+            File file = new File("src/main/resources/graphics/reputation/loved.png");
+            Image image = new Image(file.toURI().toString());
+            reputationImage.setImage(image);
+        }
     }
 
     private void updateBudgetField() {
@@ -154,7 +186,6 @@ public class SecondaryPresenter extends GameObserver {
 
     private void updateScenarioDescription() {
         scenarioDescription.setText(getScenarioText());
-
     }
     private void updateChoiceButtons() {
 
