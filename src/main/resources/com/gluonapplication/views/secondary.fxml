@@ -13,7 +13,7 @@
 
 <View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gluonapplication.views.SecondaryPresenter">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="choiceFour" layoutX="188.0" layoutY="469.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
             <ImageView fx:id="cityGraphics" fitHeight="249.0" fitWidth="350.0" pickOnBounds="true">
@@ -26,9 +26,9 @@
             <Button fx:id="choiceTwo" layoutX="188.0" layoutY="385.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
             <Button fx:id="choiceThree" layoutX="26.0" layoutY="469.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
             <Label fx:id="scenarioDescription" alignment="TOP_LEFT" ellipsisString="\\n" layoutX="29.0" layoutY="268.0" prefHeight="91.0" prefWidth="300.0" text="Scenario: 10 of your employees has caught the china virus, what do you do?" />
-            <Label fx:id="reputationLabel" layoutX="109.0" layoutY="124.0" text="Reputation:" textFill="#ffffff">
+            <Label fx:id="reputationLabel" layoutX="257.0" layoutY="3.0" text="Reputation:" textFill="#ffffff">
                <font>
-                  <Font name="8bitOperatorPlus8-Regular" size="31.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <Label layoutX="7.0" layoutY="4.0" text="Budget:" textFill="#ffffff">
@@ -36,17 +36,17 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="dateField" layoutX="26.0" layoutY="214.0" text="28/02-2020" textFill="#ffffff">
+            <Label fx:id="dateField" layoutX="7.0" layoutY="213.0" text="28/02-2020" textFill="#ffffff">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <ImageView fx:id="reputationImage" fitHeight="17.0" fitWidth="16.0" layoutX="319.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="reputationImage" fitHeight="17.0" fitWidth="16.0" layoutX="327.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../graphics/reputation/veryangry.png" />
                </image>
             </ImageView>
-            <Label fx:id="budgetField" layoutX="50.0" layoutY="5.0" prefHeight="18.0" prefWidth="90.0" text="\$5000" textFill="#0cbf1e" wrapText="true" AnchorPane.bottomAnchor="576.6" AnchorPane.leftAnchor="55.0">
+            <Label fx:id="budgetField" layoutX="55.0" layoutY="4.0" prefHeight="18.0" prefWidth="90.0" text="\$5000" textFill="#0cbf1e">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -54,7 +54,6 @@
                   <Bloom />
                </effect>
             </Label>
-            <ProgressBar fx:id="progressBar" layoutX="25.0" layoutY="557.0" prefHeight="20.0" prefWidth="303.0" progress="0.0" />
          </children>
       </AnchorPane>
    </center>

@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
@@ -27,6 +29,9 @@ public class SecondaryPresenter extends GameObserver {
 
     @FXML
     private View secondary;
+
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private Label reputationLabel;
@@ -48,7 +53,7 @@ public class SecondaryPresenter extends GameObserver {
 
     //PROGRESS BAR
     @FXML
-    private ProgressBar progressBar;
+    private ProgressBar progressBar = new ProgressBar();
 
     //CHOICES BUTTONS
     @FXML
@@ -71,9 +76,8 @@ public class SecondaryPresenter extends GameObserver {
         this.game = gameController.getGame();
         game.attach(this);
 
-
         //Thanks Anders Hjordrup for ";"
-        reputationLabel.setStyle("-fx-font-family: '8-bit Operator+ 8'; -fx-font-weight: bold");
+       // reputationLabel.setStyle("-fx-font-family: '8-bit Operator+ 8'; -fx-font-weight: bold;");
 
         update();
         spawnTimer();
@@ -114,12 +118,25 @@ public class SecondaryPresenter extends GameObserver {
         var company = game.getCompany();
 
         company.makeBusinessDecision(id,game);
+        //removedDecisionPage();
     }
 
     public void makeDefaultBusinessDecision() {
         var game = gameController.getGame();
         var company = game.getCompany();
+
         company.makeBusinessDecision("choiceFour",game);
+        //removedDecisionPage();
+        //showSummary();
+    }
+
+    private void removedDecisionPage() {
+        Platform.runLater(() -> {
+            anchorPane.getChildren().remove(choiceOne);
+            anchorPane.getChildren().remove(choiceTwo);
+            anchorPane.getChildren().remove(choiceThree);
+            anchorPane.getChildren().remove(choiceFour);
+        });
     }
 
     public void clickSummaryOK() {
@@ -128,25 +145,38 @@ public class SecondaryPresenter extends GameObserver {
 
     private void spawnTimer() {
         AtomicReference<Double> progress = new AtomicReference<>((double) 0);
+
+        progressBar.setLayoutX(25.0);
+        progressBar.setLayoutY(557.0);
+        progressBar.setPrefHeight(20.0);
+        progressBar.setPrefWidth(303.0);
+        progressBar.setProgress(0);
+
         Thread t= new Thread(() -> {
+
+            Platform.runLater(() ->
+                    anchorPane.getChildren().add(progressBar));
+
             while (true) {
 
                 try {
                     sleep(50);
                     progress.updateAndGet(v -> v + 0.005);
                     progressBar.setProgress(progress.get());
+
+                    if (progress.get() >= 1) {
+                        Platform.runLater(() ->
+                                anchorPane.getChildren().remove(progressBar));
+                        break;
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-                if (progress.get() == 1) {
-                    break;
                 }
             }
 
             if (!choiceMade) {
                 makeDefaultBusinessDecision();
             }
-
         });
         t.start();
     }
