@@ -29,20 +29,15 @@ public class SecondaryPresenter extends GameObserver {
 
     @FXML
     private View secondary;
-
     @FXML
     private AnchorPane anchorPane;
-
     @FXML
     private Label reputationLabel;
-
     //GRAPHICS
     @FXML
     private ImageView cityGraphics;
-
     @FXML
     private ImageView reputationImage;
-
     //Texts
     @FXML
     private Label scenarioDescription;
@@ -50,11 +45,9 @@ public class SecondaryPresenter extends GameObserver {
     private Label budgetField;
     @FXML
     private Label dateField;
-
     //PROGRESS BAR
     @FXML
     private ProgressBar progressBar = new ProgressBar();
-
     //CHOICES BUTTONS
     @FXML
     private Button choiceOne;
@@ -76,8 +69,8 @@ public class SecondaryPresenter extends GameObserver {
         this.game = gameController.getGame();
         game.attach(this);
 
-        //Thanks Anders Hjordrup for ";"
-       // reputationLabel.setStyle("-fx-font-family: '8-bit Operator+ 8'; -fx-font-weight: bold;");
+        // Thanks Anders Hjordrup for ";"
+        // reputationLabel.setStyle("-fx-font-family: '8-bit Operator+ 8'; -fx-font-weight: bold;");
 
         update();
         spawnTimer();
@@ -100,6 +93,7 @@ public class SecondaryPresenter extends GameObserver {
                 }
             }
         });
+
         t2.start();
     }
 
@@ -120,6 +114,7 @@ public class SecondaryPresenter extends GameObserver {
         company.makeBusinessDecision(id,game);
         //removedDecisionPage();
     }
+
 
     public void makeDefaultBusinessDecision() {
         var game = gameController.getGame();

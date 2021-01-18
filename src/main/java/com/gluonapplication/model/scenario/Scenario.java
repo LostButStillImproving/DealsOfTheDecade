@@ -13,6 +13,9 @@ public class Scenario {
     public Scenario(String scenarioTextDescription, int id) {
         scenarioText = scenarioTextDescription;
     }
+    public Scenario(String scenarioTextDescription) {
+        scenarioText = scenarioTextDescription;
+    }
 
     public void addChoice(Choice choice) {
         this.choices.add(choice);

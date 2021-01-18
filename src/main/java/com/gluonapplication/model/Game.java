@@ -1,13 +1,10 @@
 package com.gluonapplication.model;
-
 import com.gluonapplication.model.choice.Choice;
 import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Thread.sleep;
@@ -31,7 +28,6 @@ public class Game implements Runnable {
     private final Queue<Scenario> scenarioQueue = new ArrayDeque<>();
     private LocalDate date = LocalDate.of(2020,1,1);
     private Scenario currentScenario;
-
     private boolean decisionRound = true;
     public void setCurrentScenario() {
         if (!scenarioQueue.isEmpty()) {

@@ -10,6 +10,7 @@ public class MediumCompany implements Company {
     private int IQ = 110;
     private Double reputation = 2.5;
     private final AtomicInteger budget = new AtomicInteger(10000);
+
     @Override
     public AtomicInteger getBudget() {
         return budget;
@@ -39,7 +40,6 @@ public class MediumCompany implements Company {
         game.flipIsDecisionRound();
         game.setCurrentScenario();
     }
-
     @Override
     public double getReputation() {
         return this.reputation;
