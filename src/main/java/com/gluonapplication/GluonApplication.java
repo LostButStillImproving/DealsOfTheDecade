@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class GluonApplication extends MobileApplication {
 
-    public static final String PRIMARY_VIEW = HOME_VIEW;
+    public static  final String PRIMARY_VIEW = HOME_VIEW;
     public static final String SECONDARY_VIEW = "Secondary View";
     
     @Override
