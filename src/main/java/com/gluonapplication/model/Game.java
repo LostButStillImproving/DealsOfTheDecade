@@ -75,25 +75,26 @@ public class Game implements Runnable {
         Scenario coronaScenario = new Scenario("Scenario: \n" +
                 "10 of your employees has caught the\n" +
                 "china virus, what do you do?", 1);
-        coronaScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0));
-        coronaScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90.));
-        coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0.));
-        coronaScenario.addChoice(new Choice("Do nothing!", -5000., 0., 0., 0.));
+        coronaScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0, "You save money, but oh my do people think\n your company has no morals"));
+        coronaScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90., "You lose money, but gain\nthe respect of the people"));
+        coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0., "Oops. China does not take well to criticism.\nICBMs carrying nukes\n has arrived at your local shop"));
+        coronaScenario.addChoice(new Choice("Do nothing!", -5000., 0., 0., 0., "Such a gutless CEO you are!"));
         this.scenarios.add(coronaScenario);
 
         Scenario testScenario = new Scenario("Scenario: \n" +
                 "Your reputation within the CCP\n" +
                 "has been destroyed, what do you do?", 1);
-        testScenario.addChoice(new Choice("Make China\nGreat Again!", 10000., 1., -5.0, 0.0));
-        testScenario.addChoice(new Choice("Blame China Again", -200.0, 0.5, 5.0, 90.));
-        testScenario.addChoice(new Choice("Beg for forgiveness ", 200., -2., -10., 0.));
-        testScenario.addChoice(new Choice("Do nothing!", -2000., 0.1, -5., 0.));
+        testScenario.addChoice(new Choice("Make China\nGreat Again!", 10000., 1., -5.0, 0.0, "bla"));
+        testScenario.addChoice(new Choice("Blame China Again", -200.0, 0.5, 5.0, 90., "blabla"));
+        testScenario.addChoice(new Choice("Beg for forgiveness ", 200., -2., -10., 0., "blablala"));
+        testScenario.addChoice(new Choice("Do nothing!", -2000., 0.1, -5., 0., "blablabla"));
         this.scenarios.add(testScenario);
     }
 
     private void increaseDate() {
         date = date.plusDays(1);
     }
+
 
     @Override
     public void run() {

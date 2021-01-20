@@ -7,11 +7,11 @@ public class Choice {
     private final Double repEffect;  // additive
     private final Double IQEffect; // additive
     private final Double IQLimit; // FIND online grænser for dumme dyr og smarte mennesker
+    private String summary;
 
     public Double getBudgetEffect() {
         return budgetEffect;
     }
-
     public Double getRepEffect() {
         return repEffect;
     }
@@ -24,16 +24,21 @@ public class Choice {
         return IQLimit;
     }
 
-    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit) {
+    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary) {
         this.description = description;
         this.budgetEffect = budgetEffect;
         this.repEffect = repEffect;
         this.IQEffect = IQEffect;
         this.IQLimit = IQLimit;
+        this.summary = summary;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 }
 

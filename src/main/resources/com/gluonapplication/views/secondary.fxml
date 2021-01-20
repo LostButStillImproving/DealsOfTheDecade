@@ -14,17 +14,11 @@
    <center>
       <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="choiceFour" layoutX="188.0" layoutY="469.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
             <ImageView fx:id="cityGraphics" fitHeight="249.0" fitWidth="350.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../graphics/city/placeholder.png" />
                </image>
             </ImageView>
-            <Label layoutX="26.0" layoutY="366.0" prefHeight="18.0" prefWidth="126.0" text="Business Decisions:" />
-            <Button fx:id="choiceOne" layoutX="26.0" layoutY="385.0" mnemonicParsing="false" onMouseClicked="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
-            <Button fx:id="choiceTwo" layoutX="188.0" layoutY="385.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
-            <Button fx:id="choiceThree" layoutX="26.0" layoutY="469.0" mnemonicParsing="false" onAction="#makeBusinessDecision" prefHeight="70.0" prefWidth="139.0" text="Button" />
-            <Label fx:id="scenarioDescription" alignment="TOP_LEFT" ellipsisString="\\n" layoutX="29.0" layoutY="268.0" prefHeight="91.0" prefWidth="300.0" text="Scenario: 10 of your employees has caught the china virus, what do you do?" />
             <Label fx:id="reputationLabel" layoutX="257.0" layoutY="3.0" text="Reputation:" textFill="#ffffff">
                <font>
                   <Font name="System Bold" size="12.0" />
