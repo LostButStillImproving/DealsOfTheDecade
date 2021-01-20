@@ -182,9 +182,14 @@ public class SecondaryPresenter extends GameObserver {
         var company = game.getCompany();
 
         game.flipIsDecisionRound();
+        flipChoiceMade();
         company.makeBusinessDecision(id,game);
         removeDecisionPage();
         showSummaryPage(id);
+    }
+
+    private void flipChoiceMade() {
+        this.choiceMade = !this.choiceMade;
     }
 
 
@@ -201,24 +206,26 @@ public class SecondaryPresenter extends GameObserver {
         Platform.runLater(() -> {
             anchorPane.getChildren().add(summary);
             anchorPane.getChildren().add(summaryContinue);
+            if (id.equals("choiceOne")) {
+                summary.setText(getSummary(0));
+            }
+            if (id.equals("choiceTwo")) {
+                summary.setText(getSummary(1));
+
+            }
+            if (id.equals("choiceThree")) {
+                summary.setText(getSummary(2));
+            }
+            if (id.equals("choiceFour")) {
+                summary.setText(getSummary(3));
+            }
         });
 
-        if (id.equals("choiceOne")) {
-            summary.setText(getSummary(0));
-        }
-        if (id.equals("choiceTwo")) {
-            summary.setText(getSummary(1));
 
-        }
-        if (id.equals("choiceThree")) {
-            summary.setText(getSummary(2));
-        }
-        if (id.equals("choiceFour")) {
-            summary.setText(getSummary(3));
-        }
     }
     private void removeDecisionPage() {
         Platform.runLater(() -> {
+            anchorPane.getChildren().remove(businessDecision);
             anchorPane.getChildren().remove(scenarioDescription);
             anchorPane.getChildren().remove(choiceOne);
             anchorPane.getChildren().remove(choiceTwo);
@@ -228,11 +235,17 @@ public class SecondaryPresenter extends GameObserver {
     }
     public void clickSummaryContinue() {
         gameController.getGame().flipIsDecisionRound();
-        anchorPane.getChildren().remove(summary);
+        removeSummaryPage();
 
         for (Control node:this.nodes) {
             anchorPane.getChildren().add(node);
         }
+        spawnTimer();
+    }
+
+    private void removeSummaryPage() {
+        anchorPane.getChildren().remove(summary);
+        anchorPane.getChildren().remove(summaryContinue);
     }
 
     private void spawnTimer() {
