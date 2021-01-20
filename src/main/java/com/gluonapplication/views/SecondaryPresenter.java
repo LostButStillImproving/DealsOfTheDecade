@@ -32,8 +32,6 @@ public class SecondaryPresenter extends GameObserver {
     private View secondary;
     @FXML
     private AnchorPane anchorPane;
-    @FXML
-    private Label reputationLabel;
     //GRAPHICS
     @FXML
     private ImageView cityGraphics;
@@ -41,29 +39,29 @@ public class SecondaryPresenter extends GameObserver {
     private ImageView reputationImage;
     //Texts
 
-    private Label businessDecision = new Label();
+    private final Label businessDecision = new Label();
     @FXML
-    private Label scenarioDescription = new Label();
+    private final Label scenarioDescription = new Label();
 
-    private Label summary = new Label();
+    private final Label summary = new Label();
     @FXML
     private Label budgetField;
     @FXML
     private Label dateField;
     //PROGRESS BAR
     @FXML
-    private ProgressBar progressBar = new ProgressBar();
+    private final ProgressBar progressBar = new ProgressBar();
     //CHOICES BUTTONS
     @FXML
-    private Button choiceOne = new Button();
+    private final Button choiceOne = new Button();
     @FXML
-    private Button choiceTwo = new Button();
+    private final Button choiceTwo = new Button();
     @FXML
-    private Button choiceThree = new Button();
+    private final Button choiceThree = new Button();
     @FXML
-    private Button choiceFour = new Button();
+    private final Button choiceFour = new Button();
 
-    private Button summaryContinue = new Button();
+    private final Button summaryContinue = new Button();
 
     private Boolean choiceMade = false;
 
@@ -71,7 +69,7 @@ public class SecondaryPresenter extends GameObserver {
 
     private Game game;
 
-    private ArrayList<Control> nodes = new ArrayList<>();
+    private final ArrayList<Control> decisionNodes = new ArrayList<>();
 
     public void initialize() {
 
@@ -89,12 +87,12 @@ public class SecondaryPresenter extends GameObserver {
         this.game = gameController.getGame();
         game.attach(this);
 
-        nodes.add(businessDecision);
-        nodes.add(scenarioDescription);
-        nodes.add(choiceOne);
-        nodes.add(choiceTwo);
-        nodes.add(choiceThree);
-        nodes.add(choiceFour);
+        decisionNodes.add(businessDecision);
+        decisionNodes.add(scenarioDescription);
+        decisionNodes.add(choiceOne);
+        decisionNodes.add(choiceTwo);
+        decisionNodes.add(choiceThree);
+        decisionNodes.add(choiceFour);
 
         constructButtonsAndLabels();
         updateScenarioDescription();
@@ -237,7 +235,7 @@ public class SecondaryPresenter extends GameObserver {
         gameController.getGame().flipIsDecisionRound();
         removeSummaryPage();
 
-        for (Control node:this.nodes) {
+        for (Control node:this.decisionNodes) {
             anchorPane.getChildren().add(node);
         }
         spawnTimer();
