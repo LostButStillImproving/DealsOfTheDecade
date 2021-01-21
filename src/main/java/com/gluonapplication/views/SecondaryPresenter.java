@@ -248,7 +248,6 @@ public class SecondaryPresenter extends GameObserver {
     }
 
     private void removeSummaryPage() {
-        System.out.println("remove");
         anchorPane.getChildren().remove(summary);
         anchorPane.getChildren().remove(summaryContinue);
     }
@@ -284,7 +283,6 @@ public class SecondaryPresenter extends GameObserver {
                     e.printStackTrace();
                 }
             }
-            System.out.println(choiceMade.get());
             if (!choiceMade.get()) {
                 makeDefaultBusinessDecision();
             }
