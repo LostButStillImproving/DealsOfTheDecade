@@ -66,7 +66,7 @@ public class SecondaryPresenter extends GameObserver {
 
     private final Button summaryContinue = new Button();
 
-    private AtomicBoolean choiceMade = new AtomicBoolean(false);
+    private volatile AtomicBoolean choiceMade = new AtomicBoolean(false);
 
     private GameController gameController;
 
@@ -252,7 +252,7 @@ public class SecondaryPresenter extends GameObserver {
         anchorPane.getChildren().remove(summaryContinue);
     }
 
-    private synchronized void spawnTimer() {
+    private void spawnTimer() {
         progressBar.setLayoutX(25.0);
         progressBar.setLayoutY(557.0);
         progressBar.setPrefHeight(20.0);
@@ -266,7 +266,7 @@ public class SecondaryPresenter extends GameObserver {
 
             while (true) {
                 if (choiceMade.get()) {
-                    anchorPane.getChildren().remove(progressBar);
+                    Platform.runLater(() -> anchorPane.getChildren().remove(progressBar));
                     break;
                 }
                 try {
