@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Thread.sleep;
@@ -38,6 +39,8 @@ public class SecondaryPresenter extends GameObserver {
     @FXML
     private ImageView reputationImage;
     //Texts
+
+    AtomicReference<Double> progress = new AtomicReference<>((double) 0);
 
     private final Label businessDecision = new Label();
     @FXML
@@ -63,7 +66,7 @@ public class SecondaryPresenter extends GameObserver {
 
     private final Button summaryContinue = new Button();
 
-    private Boolean choiceMade = false;
+    private AtomicBoolean choiceMade = new AtomicBoolean(false);
 
     private GameController gameController;
 
@@ -187,7 +190,7 @@ public class SecondaryPresenter extends GameObserver {
     }
 
     private void flipChoiceMade() {
-        this.choiceMade = !this.choiceMade;
+        choiceMade.set(!choiceMade.get());
     }
 
 
@@ -196,6 +199,7 @@ public class SecondaryPresenter extends GameObserver {
         var company = game.getCompany();
 
         game.flipIsDecisionRound();
+        flipChoiceMade();
         company.makeBusinessDecision("choiceFour",game);
         removeDecisionPage();
         showSummaryPage("choiceFour");
@@ -229,6 +233,7 @@ public class SecondaryPresenter extends GameObserver {
             anchorPane.getChildren().remove(choiceTwo);
             anchorPane.getChildren().remove(choiceThree);
             anchorPane.getChildren().remove(choiceFour);
+            anchorPane.getChildren().remove(progressBar);
         });
     }
     public void clickSummaryContinue() {
@@ -238,30 +243,33 @@ public class SecondaryPresenter extends GameObserver {
         for (Control node:this.decisionNodes) {
             anchorPane.getChildren().add(node);
         }
+        flipChoiceMade();
         spawnTimer();
     }
 
     private void removeSummaryPage() {
+        System.out.println("remove");
         anchorPane.getChildren().remove(summary);
         anchorPane.getChildren().remove(summaryContinue);
     }
 
-    private void spawnTimer() {
-        AtomicReference<Double> progress = new AtomicReference<>((double) 0);
-
+    private synchronized void spawnTimer() {
         progressBar.setLayoutX(25.0);
         progressBar.setLayoutY(557.0);
         progressBar.setPrefHeight(20.0);
         progressBar.setPrefWidth(303.0);
         progressBar.setProgress(0);
-
+        progress.set(0.);
         Thread t= new Thread(() -> {
 
             Platform.runLater(() ->
                     anchorPane.getChildren().add(progressBar));
 
             while (true) {
-
+                if (choiceMade.get()) {
+                    anchorPane.getChildren().remove(progressBar);
+                    break;
+                }
                 try {
                     sleep(50);
                     progress.updateAndGet(v -> v + 0.005);
@@ -276,8 +284,8 @@ public class SecondaryPresenter extends GameObserver {
                     e.printStackTrace();
                 }
             }
-
-            if (!choiceMade) {
+            System.out.println(choiceMade.get());
+            if (!choiceMade.get()) {
                 makeDefaultBusinessDecision();
             }
         });
