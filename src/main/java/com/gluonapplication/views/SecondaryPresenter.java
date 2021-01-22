@@ -196,8 +196,10 @@ public class SecondaryPresenter extends GameObserver {
         anchorPane.getChildren().remove(difficultyHardToggle);
 
         Toggle difficultySelectedToggle = difficulty.getSelectedToggle();
+        if (difficultySelectedToggle == null) {
+            gameController = new GameController("SMALL");
+        } else gameController = new GameController((String) difficultySelectedToggle.getUserData());
 
-        gameController = new GameController((String) difficultySelectedToggle.getUserData());
         this.game = gameController.getGame();
         game.attach(this);
 
