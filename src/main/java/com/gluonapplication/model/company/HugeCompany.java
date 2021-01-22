@@ -10,7 +10,7 @@ public class HugeCompany implements Company{
     private final Double budgetConstant = 0.1;
     private int IQ = 110;
     private Double reputation = 2.5;
-    private final AtomicInteger budget = new AtomicInteger(10000);
+    private final AtomicInteger budget = new AtomicInteger(100000);
 
     @Override
     public void updateBudgetConstant() {
@@ -41,6 +41,11 @@ public class HugeCompany implements Company{
     @Override
     public double getReputation() {
         return this.reputation;
+    }
+
+    @Override
+    public Double getBudgetConstant() {
+        return this.budgetConstant;
     }
 
     private void applyChoiceImpact(Game game, int choiceNumber) {

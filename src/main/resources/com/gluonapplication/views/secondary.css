@@ -6,4 +6,14 @@
     src: url('font/8bitOperatorPlus8-Regular.ttf');
 }
 
+.selected-button {
+    -fx-background-color: -primary-swatch-800;
+}
 
+.unselected-button {
+    -fx-background-color: -primary-swatch-300;
+}
+
+.button:hover {
+    -fx-background-color:-primary-swatch-900;
+}

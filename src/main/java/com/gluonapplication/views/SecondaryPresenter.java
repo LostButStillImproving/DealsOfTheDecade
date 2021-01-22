@@ -12,13 +12,11 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +36,8 @@ public class SecondaryPresenter extends GameObserver {
     private ImageView cityGraphics;
     @FXML
     private ImageView reputationImage;
+
+    private  ImageView companyImage = new ImageView();
     //Texts
 
     AtomicReference<Double> progress = new AtomicReference<>((double) 0);
@@ -47,6 +47,8 @@ public class SecondaryPresenter extends GameObserver {
     private final Label scenarioDescription = new Label();
 
     private final Label summary = new Label();
+
+    private final Label gameDescription = new Label();
     @FXML
     private Label budgetField;
     @FXML
@@ -66,16 +68,27 @@ public class SecondaryPresenter extends GameObserver {
 
     private final Button summaryContinue = new Button();
 
-    private volatile AtomicBoolean choiceMade = new AtomicBoolean(false);
+    private final Button startGame = new Button();
 
+    private final AtomicBoolean choiceMade = new AtomicBoolean(false);
+
+    private final ToggleButton difficultyEasyToggle = new ToggleButton();
+
+    private final ToggleButton difficultyMediumToggle = new ToggleButton();
+
+    private final ToggleButton difficultyHardToggle = new ToggleButton();
+
+    private final ToggleGroup difficulty = new ToggleGroup();
     private GameController gameController;
 
     private Game game;
 
+    private Stage stage;
+
     private final ArrayList<Control> decisionNodes = new ArrayList<>();
 
     public void initialize() {
-
+        secondary.getApplication().getGlassPane();
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
@@ -86,9 +99,114 @@ public class SecondaryPresenter extends GameObserver {
             }
         });
 
-        gameController = new GameController("SMALL");
+        gameDescription.setText("Welcome to GameName!\nIn this game you'll be asked to make\nsome hard hitting questions\nDon't let your budget hit zero, or you lose");
+        gameDescription.setLayoutX(29.0);
+        gameDescription.setLayoutY(268.0);
+        anchorPane.getChildren().add(gameDescription);
+
+        difficultyEasyToggle.setLayoutY(430);
+        difficultyEasyToggle.setLayoutX(29.0);
+        difficultyEasyToggle.setText("Easy");
+        difficultyEasyToggle.setPrefHeight(35);
+        difficultyEasyToggle.setUserData("SMALL");
+
+        difficultyMediumToggle.setLayoutY(430);
+        difficultyMediumToggle.setLayoutX(145.0);
+        difficultyMediumToggle.setText("Medium");
+        difficultyMediumToggle.setPrefHeight(35);
+        difficultyMediumToggle.setUserData("MEDIUM");
+
+        difficultyHardToggle.setLayoutY(430);
+        difficultyHardToggle.setLayoutX(267.0);
+        difficultyHardToggle.setText("Hard");
+        difficultyHardToggle.setPrefHeight(35);
+        difficultyHardToggle.setUserData("HUGE");
+
+        difficultyEasyToggle.setOnAction(e->{
+            if(difficultyEasyToggle.isSelected()){
+                difficultyEasyToggle.getStyleClass().add("selected");
+                difficultyMediumToggle.getStyleClass().add("unselected");
+                difficultyHardToggle.getStyleClass().add("unselected");
+            }
+            else{
+                difficultyEasyToggle.getStyleClass().add("unselected");
+            }
+        });
+
+        difficultyMediumToggle.setOnAction(e->{
+            if(difficultyMediumToggle.isSelected()){
+                difficultyMediumToggle.getStyleClass().add("selected");
+                difficultyEasyToggle.getStyleClass().add("unselected");
+                difficultyHardToggle.getStyleClass().add("unselected");
+            }
+            else{
+                difficultyEasyToggle.getStyleClass().add("unselected");
+            }
+        });
+
+        difficultyMediumToggle.setOnAction(e->{
+            if(difficultyMediumToggle.isSelected()){
+                difficultyMediumToggle.getStyleClass().add("selected");
+                difficultyEasyToggle.getStyleClass().add("unselected");
+                difficultyHardToggle.getStyleClass().add("unselected");
+            }
+            else{
+                difficultyMediumToggle.getStyleClass().add("unselected");
+            }
+        });
+        difficultyHardToggle.setOnAction(e->{
+            if(difficultyHardToggle.isSelected()){
+                difficultyHardToggle.getStyleClass().add("selected");
+                difficultyEasyToggle.getStyleClass().add("unselected");
+                difficultyMediumToggle.getStyleClass().add("unselected");
+            }
+            else{
+                difficultyHardToggle.getStyleClass().add("unselected");
+            }
+        });
+
+        anchorPane.getChildren().add(difficultyEasyToggle);
+        anchorPane.getChildren().add(difficultyMediumToggle);
+        anchorPane.getChildren().add(difficultyHardToggle);
+
+
+        difficulty.getToggles().add(difficultyEasyToggle);
+        difficulty.getToggles().add(difficultyMediumToggle);
+        difficulty.getToggles().add(difficultyHardToggle);
+
+
+        startGame.setText("Start Game!");
+        startGame.getStyleClass().add("selected");
+        startGame.setLayoutX(29.0);
+        startGame.setLayoutY(469.0);
+        startGame.setPrefHeight(70.0);
+        startGame.setPrefWidth(292.0);
+        startGame.setOnAction((event) -> initializeGame());
+
+        anchorPane.getChildren().add(startGame);
+
+    }
+
+    private void initializeGame() {
+
+        anchorPane.getChildren().remove(gameDescription);
+        anchorPane.getChildren().remove(startGame);
+        anchorPane.getChildren().remove(difficultyEasyToggle);
+        anchorPane.getChildren().remove(difficultyMediumToggle);
+        anchorPane.getChildren().remove(difficultyHardToggle);
+
+        Toggle difficultySelectedToggle = difficulty.getSelectedToggle();
+
+        gameController = new GameController((String) difficultySelectedToggle.getUserData());
         this.game = gameController.getGame();
         game.attach(this);
+
+        File file = new File("src/main/resources/graphics/company/smallCompany.png");
+        Image image = new Image(file.toURI().toString());
+        companyImage.setLayoutX(100.);
+        companyImage.setLayoutY(200);
+        companyImage.setImage((image));
+        anchorPane.getChildren().add(companyImage);
 
         decisionNodes.add(businessDecision);
         decisionNodes.add(scenarioDescription);
@@ -127,7 +245,7 @@ public class SecondaryPresenter extends GameObserver {
         summary.setPrefHeight(91.0);
         summary.setPrefWidth(300.0);
 
-        summaryContinue.setOnAction((e) -> clickSummaryContinue());
+        summaryContinue.setOnAction(this::clickSummaryContinue);
         summaryContinue.setText("Continue");
         summaryContinue.setLayoutX(26.0);
         summaryContinue.setLayoutY(385.0);
@@ -236,7 +354,7 @@ public class SecondaryPresenter extends GameObserver {
             anchorPane.getChildren().remove(progressBar);
         });
     }
-    public void clickSummaryContinue() {
+    public void clickSummaryContinue(Event event) {
         gameController.getGame().flipIsDecisionRound();
         removeSummaryPage();
 
@@ -266,7 +384,8 @@ public class SecondaryPresenter extends GameObserver {
 
             while (true) {
                 if (choiceMade.get()) {
-                    Platform.runLater(() -> anchorPane.getChildren().remove(progressBar));
+                    Platform.runLater(() ->
+                            anchorPane.getChildren().remove(progressBar));
                     break;
                 }
                 try {
@@ -297,7 +416,29 @@ public class SecondaryPresenter extends GameObserver {
             updateBudgetField();
             updateRepIcon();
             updateDateField();
+            updateCompanyImage();
         });
+    }
+
+    private void updateCompanyImage() {
+        if (gameController.getGame().getCompany().getBudgetConstant() <= 1.1) {
+            File file = new File("src/main/resources/graphics/company/smallCompany.png");
+            Image image = new Image(file.toURI().toString());
+            companyImage.setImage(image);
+        } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.2) {
+            File file = new File("src/main/resources/graphics/company/smallNiceCompany.png");
+            Image image = new Image(file.toURI().toString());
+            companyImage.setImage(image);
+        } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.3) {
+            File file = new File("src/main/resources/graphics/company/mediumCompany.png");
+            Image image = new Image(file.toURI().toString());
+            companyImage.setImage(image);
+        } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.4) {
+            File file = new File("src/main/resources/graphics/company/largeCompany.png");
+            Image image = new Image(file.toURI().toString());
+            companyImage.setImage(image);
+        }
+
     }
 
     private void updateDateField() {

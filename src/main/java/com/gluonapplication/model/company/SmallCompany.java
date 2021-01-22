@@ -11,7 +11,7 @@ public class SmallCompany implements Company {
     private Double budgetConstant = 1.1;
     private int IQ = 110;
     private Double reputation = 2.5;
-    private final AtomicInteger budget = new AtomicInteger(10000);
+    private final AtomicInteger budget = new AtomicInteger(5000);
 
     private Boolean hasBecomeRich = false;
 
@@ -74,6 +74,11 @@ public class SmallCompany implements Company {
     @Override
     public double getReputation() {
         return this.reputation;
+    }
+
+    @Override
+    public Double getBudgetConstant() {
+        return this.budgetConstant;
     }
 
     private void applyChoiceImpact(Game game, int choiceNumber) {

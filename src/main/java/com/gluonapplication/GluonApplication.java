@@ -15,22 +15,19 @@ import java.util.Optional;
 
 public class GluonApplication extends MobileApplication {
 
-    public static  final String PRIMARY_VIEW = HOME_VIEW;
-    public static final String SECONDARY_VIEW = "Secondary View";
+    public static  final String PRIMARY_VIEW = "Primary View";
+    public static final String SECONDARY_VIEW = HOME_VIEW;
     
     @Override
     public void init() {
         addViewFactory(PRIMARY_VIEW, () -> new PrimaryView().getView());
         addViewFactory(SECONDARY_VIEW, () -> new SecondaryView().getView());
-
         DrawerManager.buildDrawer(this);
     }
 
     @Override
     public void postInit(Scene scene) {
-        Swatch.BLUE.assignTo(scene);
-
-        scene.getStylesheets().add(GluonApplication.class.getResource("style.css").toExternalForm());
+        Swatch.BLUE.assignTo(scene);scene.getStylesheets().add(GluonApplication.class.getResource("style.css").toExternalForm());
         ((Stage) scene.getWindow()).getIcons().add(new Image(GluonApplication.class.getResourceAsStream("/icon.png")));
     }
 

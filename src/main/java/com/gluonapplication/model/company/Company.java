@@ -14,4 +14,6 @@ public interface Company {
     void makeBusinessDecision(String id, Game game);
 
     double getReputation();
+
+    Double getBudgetConstant();
 }

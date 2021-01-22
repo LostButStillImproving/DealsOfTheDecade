@@ -45,6 +45,11 @@ public class MediumCompany implements Company {
         return this.reputation;
     }
 
+    @Override
+    public Double getBudgetConstant() {
+        return this.budgetConstant;
+    }
+
     private void applyChoiceImpact(Game game, int choiceNumber) {
         Choice choice = game.getCurrentScenario().getChoices().get(choiceNumber - 1);
         this.budget.addAndGet( choice.getBudgetEffect().intValue());
