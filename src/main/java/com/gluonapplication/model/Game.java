@@ -75,6 +75,7 @@ public class Game implements Runnable {
     }
 
     public void rebuildScenarioQueue(Integer scenarioID) {
+
         this.scenarios.remove(0);
         this.scenarioQueue.clear();
         for (Scenario scenario:getScenarios())
@@ -99,7 +100,7 @@ public class Game implements Runnable {
         Scenario chinaNuclearWar = new Scenario("Scenario: \n" +
                 "Your reputation within the CCP\n" +
                 "has been destroyed, what do you do?", 1);
-        chinaNuclearWar.addChoice(new Choice("̵Ẃ̖i̙̘̞͇̹t̫̼̙̖̦h̢̪̬͎̩̮̰̼ ̱̯̗̩̼͖͎o͚͚͠u̵͔̭̳̠̼̮t̟̖̭̳ ̶̳̠͖o͕̜̦r̳̰͔̯̩̹d̦e̜̠r̡̝̞̫.̠͎̬\n", 10000., 1., -5.0, 0.0, "bla"));
+        chinaNuclearWar.addChoice(new Choice("Make China Great Again", 10000., 1., -5.0, 0.0, "bla"));
         chinaNuclearWar.addChoice(new Choice("Blame China Again", -200.0, 0.5, 5.0, 90., "blabla"));
         chinaNuclearWar.addChoice(new Choice("Beg for forgiveness ", 200., -2., -10., 0., "blablala"));
         chinaNuclearWar.addChoice(new Choice("Do nothing!", -2000., 0.1, -5., 0., "blablabla"));
