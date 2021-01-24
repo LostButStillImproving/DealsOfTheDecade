@@ -262,7 +262,7 @@ public class SecondaryPresenter extends GameObserver {
 
         scenarioDescription.setLayoutX(29.0);
         scenarioDescription.setLayoutY(268.0);
-        scenarioDescription.setPrefHeight(91.0);
+        scenarioDescription.setPrefHeight(100.0);
         scenarioDescription.setPrefWidth(300.0);
 
         choiceOne.setId("choiceOne");

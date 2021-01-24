@@ -96,6 +96,12 @@ public class Game implements Runnable {
         coronaScenario.addChoice(new Choice("Do nothing!", -5000., 0., 0., 0., "Such a gutless CEO you are!"));
         this.scenarios.add(coronaScenario);
 
+        Scenario computerVirus = new Scenario("A͌ͥ̔̈́̑̇͝ ̕mi̷͋ͤ͂n͂i͌̓̄͐m͋ͤ͒̋̓͏u͆̓̽̎̎̀m̊̓ͨ̊ ẘ͆̔̈́ͧä̋̾͐̆g͛e͗̐ͭͪ̍ ̉͒ͩ̾̌ẅ́ͭ̃̿o͋ͩrͩ̽ͬͮ͑̌k͠ȅ̓̚̚͜r̸͋̈́̅͛̉ ̽h̉̌̇a̋̅́͏ś̔̇̑ͣͮ ̢͌ͬ̆́b̆̄̈́̇̀͗ͪê̇̇̄ͨ̕è̀̎͡nͦ͏ ͊lȯỏ͛͑͂k̉͒ͫͬ͞i̢ͫ̇̔͐̓̈nͫ̿ͬ̍̌gͥ̏ͦͭ̆\n ͂̃̈͏f͂ͨ̐ͧ͜őͧ̔҉r̨͐͌̓ ̀̚h̎̊͝ơ̓t̐̅ ͭͯ̎҉s̑͐ͯi̶̊ͪͪ͊n̶ͦ̈͆̏̑̚g̓̈́͆͒̚l̉̄͋ͣe c̓ͩh́̎̓i̸̎ͭč̷͒̄͛̌͛k\nͧ̏̈́͋͠ś ͩ̒͊̕i͋͛̒̂ͨ͊ͭn̏̏ͦ ͌̂ͭ̊̎́͌h̃̎͒͒͒i͌̄̆ͬ̾̔͋͏s̶ ̀n͏ė̀̍͗̊̽̈́ĭ̀ͣ̔gͣ͒ͤ͟h͐̅̚b͛̽̀ͩ̓͗̚͟o̍̍̾̑͜r̵h̴̉̈̒͗ͯͫ̚o̓͋҉o̡̊̿̋dͤ͐͗ͩ̄̃̑ͯ̇̀ͦ̕n̋̇́ͮͫͩ͞,̨ͪ ͬ̀ͪ̂yͤ͋͒͂̅ͥ͜ǒ̏ͮ̾͊͑̾uͮͧ͌͐rͭ̇̈́ ͪ̆̀ĕ̈́̃͜nͥ̀̏͗̇͝t́̊͛́́ͣiͯ̌̋̑́͒͟ṙ̂́ͤ̒͌͑ë́̿̍ͥ͘ ͧ̍͒Ïͥ̑̄T̵ ̐s͂͋ͩ̓̈̀̓͞y͗ͦͪ͟st̢̆̈̉̃ͬë̊̌̽͊͛̆͠m̊̆̏̏҉ \n̂͑͆h̾ͨ̉̄̉̐a̍̐ͤ̒̋̚s̅ͫͭ̔̃̆ ̶͊̽̔b͂́͋eͮ̽̈̓̾̍e̓̎n̾ͩ̆̇̀͑ ͗i̢nͨͭ̅͊̈̓͋f͟ẻ͆̋͞cͤ̾͌͛̉ͪtͧͦ͒̋ȩͣ̔̒̔ͬ̚d̆̇͌̓ͧ͑ ͥ͋͂w̿͊̀̏͡i͋͑̎͗ͨ͐t́hͪ́ ͊́//ͥn͌͏a̚m̒ͣ͊͢êͭͤͪ̾ͮ/͑ͨ͛͜/̌ͬ̔͒ͨͫ̚͝,̎͑͛ͪ̿ͣ͑\nͪͨ̆ͩnͭ́ͯ͂ ̢ͦ͂̽̄̃w̵̆ͭ͊͂͊h̸ͣͪͣ̐a͊t̔͂͑̉ ͘d͒ͤ̏͛ͫ̚ǒ̍̋ͦͬ͠ ͒̅̓ͮy͊̿̾̆ͮ̂͆͢oͪ͗̽͏ű̒ͦ̍̕ ̌ͧd̈̅ͭ̈͂ͨ͝o͟?͜");
+        computerVirus.addChoice(new Choice("Hi̕҉re͢͡͞ ̨͝ḩ̴̵o̢t̡́͢ ̨̡s̛͢in͝g͏l̡̢͡e҉s̴̛̛ ̷̵͢i͢͡͡n͢͢ \n̴t̷h͏̵è ͢ ̸n̡ȩ̢͡i̢g͏h̛͢b́͞our̷̴h͜oơ͞d̕", 10000., 1., -5.0, 0.0, "bla"));
+        computerVirus.addChoice(new Choice("S̴͟ènd̶ ̷emp̡̢ĺ̸͘o͡y҉̀͡e̵̶e͝͏͝ \ņt̴ǫ͡ ͢h҉̷ǫ́r̶͡n̴̷̶y ̀j̨̢͞a̵͠i̵ļ\n", -200.0, 0.5, 5.0, 90., "blabla"));
+        computerVirus.addChoice(new Choice("S̴ta͡͝r҉̴t̶͘ ̷a͢n͏ ͏̷i͢͠ņ͟t̨e̴͟͢r͏͠ǹál̷ \nd͝͏̡a͢t͘i͘͜͞n̷g͡͏̛ se͟r̢͠v͟íc͘͞ę̵\n", 200., -2., -10., 0., "blablala"));
+        computerVirus.addChoice(new Choice("Ḑ̵̗̠̪̭̾ͤ͛͌ͮ̽ͮͥ͂̓̄̓̋̾͐̓́͟ǫ͔̗̪̺͇͇̺̣ͬ̈̇ͨ͒ͯ̍ͅ ͂̔̇̈́͑͒͒͌͛͆ͤ̐̄̐̾ͦ̿̈̚҉̴͎͉̩̣̦͎̱̣̟͟͞n̖̥̙͈̼̦̭̜͇̒ͥ͛̓̏͒ͣ̂̄̔ͭ̓ͧ̑̀̈̒͌͟͢͝ͅͅͅö̵̢̨͔͍͚͈̗̺̙̜̰̱̲͎͙̞́ͥ̑ͤ̐͐́́t̵̸̛̩̺̮̙͕̼̊̃̔͆̇͞h̶̞̲̺͓̲͉̪͎̲̯̱̞̼̱̹̭͍͂̎͌̽̒̿ͯ̐̚̕̕͟͠i̱̠̳͙̪͚̥̼̝͛̊͌ͧ͒ͨ̓ͨ̿̔̑͢͠͡ņ̦̱̮͍̻͈̻͉̥̜̭͗͌̄̀̌͝ǵ̙̘̣̟̯̘̫̝̣̱ͥ̌ͩ̈ͯ̆̀́͞!̨͕͈̺̫̀̈ͦ͗̓̕\n", -2000., 0.1, -5., 0., "blablabla"));
+        this.scenarios.add(computerVirus);
 
         Scenario chinaNuclearWar = new Scenario("Scenario: \n" +
                 "Your reputation within the CCP\n" +
