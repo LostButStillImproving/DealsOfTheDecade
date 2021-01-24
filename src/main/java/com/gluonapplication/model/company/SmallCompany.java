@@ -68,7 +68,6 @@ public class SmallCompany implements Company {
 
         }
 
-        game.setCurrentScenario();
     }
 
     @Override
@@ -83,6 +82,9 @@ public class SmallCompany implements Company {
 
     private void applyChoiceImpact(Game game, int choiceNumber) {
         Choice choice = game.getCurrentScenario().getChoices().get(choiceNumber - 1);
+        if (choice.getUnlocksScenarioID() != null) {
+            game.rebuildScenarioQueue(choice.getUnlocksScenarioID());
+        }
         this.budget.addAndGet( choice.getBudgetEffect().intValue());
         this.IQ += choice.getIQEffect();
 
@@ -91,6 +93,8 @@ public class SmallCompany implements Company {
             if (reputation < 0) reputation = 0.;
             if (reputation > 5) reputation = 5.;
         }
+        game.setCurrentScenario();
+
     }
 
     @Override

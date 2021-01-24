@@ -292,6 +292,12 @@ public class SecondaryPresenter extends GameObserver {
         choiceFour.setLayoutY(469.0);
         choiceFour.setPrefHeight(70.0);
         choiceFour.setPrefWidth(139.0);
+
+        anchorPane.getChildren().add(scenarioDescription);
+        anchorPane.getChildren().add(choiceOne);
+        anchorPane.getChildren().add(choiceTwo);
+        anchorPane.getChildren().add(choiceThree);
+        anchorPane.getChildren().add(choiceFour);
     }
 
     @FXML
@@ -365,6 +371,8 @@ public class SecondaryPresenter extends GameObserver {
         }
         flipChoiceMade();
         spawnTimer();
+        updateScenarioDescription();
+        updateChoiceButtons();
     }
 
     private void removeSummaryPage() {
@@ -482,15 +490,9 @@ public class SecondaryPresenter extends GameObserver {
 
     private void updateScenarioDescription() {
 
-        anchorPane.getChildren().add(scenarioDescription);
         scenarioDescription.setText(getScenarioText());
     }
     private void updateChoiceButtons() {
-
-        anchorPane.getChildren().add(choiceOne);
-        anchorPane.getChildren().add(choiceTwo);
-        anchorPane.getChildren().add(choiceThree);
-        anchorPane.getChildren().add(choiceFour);
 
         choiceOne.setText(getChoiceDescription(0));
         choiceTwo.setText(getChoiceDescription(1));

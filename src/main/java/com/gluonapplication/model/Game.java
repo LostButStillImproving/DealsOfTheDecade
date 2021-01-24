@@ -34,6 +34,7 @@ public class Game implements Runnable {
             this.currentScenario = scenarioQueue.poll();
             notifyAllObservers();
         }
+        System.out.println(currentScenario.getScenarioText());
     }
     public Scenario getCurrentScenario() {
         return currentScenario;
@@ -67,28 +68,42 @@ public class Game implements Runnable {
         return date;
     }
     private void buildScenarioQueue() {
-        scenarioQueue.addAll(getScenarios());
+        for (Scenario scenario:getScenarios())
+            if (scenario.getID() == null) {
+                scenarioQueue.add(scenario);
+            }
+    }
+
+    public void rebuildScenarioQueue(Integer scenarioID) {
+        this.scenarios.remove(0);
+        this.scenarioQueue.clear();
+        for (Scenario scenario:getScenarios())
+            if (scenario.getID() == null || scenario.getID() == scenarioID) {
+                System.out.println(scenario.getScenarioText());
+                scenarioQueue.add(scenario);
+            }
     }
 
     private void buildScenarios() {
 
         Scenario coronaScenario = new Scenario("Scenario: \n" +
                 "10 of your employees has caught the\n" +
-                "china virus, what do you do?", 1);
+                "china virus, what do you do?");
         coronaScenario.addChoice(new Choice("It's their own fault!\nFire them!", 1000., -0.5, -5.0, 0.0, "You save money, but oh my do people think\n your company has no morals"));
         coronaScenario.addChoice(new Choice("Send them home\nwith pay", -200.0, 0.5, 5.0, 90., "You lose money, but gain\nthe respect of the people"));
-        coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0., "Oops. China does not take well to criticism.\nICBMs carrying nukes\n has arrived at your local shop"));
+        coronaScenario.addChoice(new Choice("Blame China!", -5000., -2., -10., 0., "Oops. China does not take well to criticism.\nICBMs carrying nukes\n has arrived at your local shop", 1));
         coronaScenario.addChoice(new Choice("Do nothing!", -5000., 0., 0., 0., "Such a gutless CEO you are!"));
         this.scenarios.add(coronaScenario);
 
-        Scenario testScenario = new Scenario("Scenario: \n" +
+
+        Scenario chinaNuclearWar = new Scenario("Scenario: \n" +
                 "Your reputation within the CCP\n" +
                 "has been destroyed, what do you do?", 1);
-        testScenario.addChoice(new Choice("Make China\nGreat Again!", 10000., 1., -5.0, 0.0, "bla"));
-        testScenario.addChoice(new Choice("Blame China Again", -200.0, 0.5, 5.0, 90., "blabla"));
-        testScenario.addChoice(new Choice("Beg for forgiveness ", 200., -2., -10., 0., "blablala"));
-        testScenario.addChoice(new Choice("Do nothing!", -2000., 0.1, -5., 0., "blablabla"));
-        this.scenarios.add(testScenario);
+        chinaNuclearWar.addChoice(new Choice("̵Ẃ̖i̙̘̞͇̹t̫̼̙̖̦h̢̪̬͎̩̮̰̼ ̱̯̗̩̼͖͎o͚͚͠u̵͔̭̳̠̼̮t̟̖̭̳ ̶̳̠͖o͕̜̦r̳̰͔̯̩̹d̦e̜̠r̡̝̞̫.̠͎̬\n", 10000., 1., -5.0, 0.0, "bla"));
+        chinaNuclearWar.addChoice(new Choice("Blame China Again", -200.0, 0.5, 5.0, 90., "blabla"));
+        chinaNuclearWar.addChoice(new Choice("Beg for forgiveness ", 200., -2., -10., 0., "blablala"));
+        chinaNuclearWar.addChoice(new Choice("Do nothing!", -2000., 0.1, -5., 0., "blablabla"));
+        this.scenarios.add(chinaNuclearWar);
     }
 
     private void increaseDate() {
@@ -114,7 +129,6 @@ public class Game implements Runnable {
                 increaseDate();
                 notifyAllObservers();
             }
-            System.out.println(company);
         } while (!gameDone());
     }
 

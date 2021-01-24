@@ -6,14 +6,15 @@ import java.util.ArrayList;
 
 public class Scenario {
 
-    private int id;
+    private Integer ID;
     private final String scenarioText;
     private final ArrayList<Choice> choices = new ArrayList<>();
-
-    public Scenario(String scenarioTextDescription, int id) {
+    public Scenario(String scenarioTextDescription, Integer id) {
+        this.ID = id;
         scenarioText = scenarioTextDescription;
     }
     public Scenario(String scenarioTextDescription) {
+        this.ID = null;
         scenarioText = scenarioTextDescription;
     }
 
@@ -27,5 +28,8 @@ public class Scenario {
 
     public ArrayList<Choice> getChoices() {
         return choices;
+    }
+    public Integer getID() {
+        return ID;
     }
 }
