@@ -10,7 +10,10 @@
 <?import javafx.scene.text.Font?>
 
 <View fx:id="secondary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="500.0" prefHeight="600.0" prefWidth="512.0" stylesheets="@secondary.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gluonapplication.views.SecondaryPresenter">
-   <center>
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+   <left>
       <AnchorPane fx:id="anchorPane" minWidth="350.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="cityGraphics" fitHeight="249.0" fitWidth="350.0" pickOnBounds="true">
@@ -46,7 +49,37 @@
                   <Bloom />
                </effect>
             </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../graphics/city/Volcano.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="298.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../graphics/city/Skyscraper1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="120.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../graphics/city/Skyscraper2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="60.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../graphics/city/WhiteSkyscraper.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="358.0" layoutX="-3.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../graphics/city/Highway.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="49.0" fitWidth="72.0" layoutX="-3.0" layoutY="200.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../graphics/city/FlatBuilding.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-   </center>
+   </left>
 </View>
