@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -66,8 +67,8 @@ public class GamePresenter extends GameObserver {
     @FXML
     private AnchorPane anchorPane;
     //GRAPHICS
-    @FXML
-    private ImageView cityGraphics;
+
+    private ImageView cityGraphics = new ImageView();
     @FXML
     private ImageView reputationImage;
     private final ImageView companyImage = new ImageView();
@@ -98,6 +99,25 @@ public class GamePresenter extends GameObserver {
     }
 
     private void buildStartPage() {
+
+        File fileCity = new File("src/main/resources/graphics/city/city.png");
+        Image imageCity = new Image(fileCity.toURI().toString());
+        cityGraphics.setFitHeight(249.0);
+        cityGraphics.setFitWidth(350.0);
+        cityGraphics.setLayoutX(29.0);
+        cityGraphics.setImage(imageCity);
+        cityGraphics.setPickOnBounds(true);
+        anchorPane.getChildren().add(cityGraphics);
+        cityGraphics.toBack();
+
+        File fileCompany = new File("src/main/resources/graphics/company/smallCompany.png");
+        Image imageCompany = new Image(fileCompany.toURI().toString());
+        companyImage.setLayoutX(200.);
+        companyImage.setLayoutY(200);
+        companyImage.setImage((imageCompany));
+        anchorPane.getChildren().add(companyImage);
+
+        companyImage.toFront();
 
         dateField.toFront();
         dateField.setLayoutX(275);
@@ -193,14 +213,6 @@ public class GamePresenter extends GameObserver {
 
         this.game = gameController.getGame();
         game.attach(this);
-
-        File file = new File("src/main/resources/graphics/company/smallCompany.png");
-        Image image = new Image(file.toURI().toString());
-        companyImage.setLayoutX(100.);
-        companyImage.setLayoutY(200);
-        companyImage.setImage((image));
-        anchorPane.getChildren().add(companyImage);
-        companyImage.toFront();
 
         decisionNodes.add(businessDecision);
         decisionNodes.add(scenarioDescription);
@@ -371,10 +383,7 @@ public class GamePresenter extends GameObserver {
     }
 
     private void tearDown() {
-
-        anchorPane.getChildren().remove(newGame);
-        anchorPane.getChildren().remove(endGameTextField);
-        anchorPane.getChildren().remove(companyImage);
+        anchorPane.getChildren().removeIf(i -> i.getId() == null);
     }
 
     private void removeDecisionPage() {
@@ -392,25 +401,30 @@ public class GamePresenter extends GameObserver {
     public void clickSummaryContinue(Event event) {
         gameController.getGame().flipIsDecisionRound();
         removeSummaryPage();
+
         if (game.gameDone()) {
             showGameOverPage();
             return;
         }
+
         for (Control node : this.decisionNodes) {
-            anchorPane.getChildren().add(node);
+
+            if (!anchorPane.getChildren().contains(node)) {
+                anchorPane.getChildren().add(node);
+            }
         }
+
         flipChoiceMade();
         spawnTimer();
         updateScenarioDescription();
         updateChoiceButtons();
-
     }
 
     private void removeSummaryPage() {
         anchorPane.getChildren().remove(summary);
         anchorPane.getChildren().remove(summaryContinue);
+        anchorPane.getChildren().remove(scenarioDescription);
     }
-
     private void spawnTimer() {
         progressBar.setLayoutX(25.0);
         progressBar.setLayoutY(557.0);
