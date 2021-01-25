@@ -120,26 +120,25 @@ public class GamePresenter extends GameObserver {
         companyImage.toFront();
 
         dateField.toFront();
-        dateField.setLayoutX(275);
         gameDescription.setText("Welcome to GameName!\nIn this game you'll be asked to make\nsome hard hitting questions\nDon't let your budget hit zero, or you lose");
         gameDescription.setLayoutX(29.0);
         gameDescription.setLayoutY(268.0);
         anchorPane.getChildren().add(gameDescription);
 
         difficultyEasyToggle.setLayoutY(430);
-        difficultyEasyToggle.setLayoutX(29.0);
+        difficultyEasyToggle.setLayoutX(41.5);
         difficultyEasyToggle.setText("Easy");
         difficultyEasyToggle.setPrefHeight(35);
         difficultyEasyToggle.setUserData("SMALL");
 
         difficultyMediumToggle.setLayoutY(430);
-        difficultyMediumToggle.setLayoutX(145.0);
+        difficultyMediumToggle.setLayoutX(170);
         difficultyMediumToggle.setText("Medium");
         difficultyMediumToggle.setPrefHeight(35);
         difficultyMediumToggle.setUserData("MEDIUM");
 
         difficultyHardToggle.setLayoutY(430);
-        difficultyHardToggle.setLayoutX(267.0);
+        difficultyHardToggle.setLayoutX(312.5);
         difficultyHardToggle.setText("Hard");
         difficultyHardToggle.setPrefHeight(35);
         difficultyHardToggle.setUserData("HUGE");
@@ -189,10 +188,10 @@ public class GamePresenter extends GameObserver {
 
         startGame.setText("Start Game!");
         startGame.getStyleClass().add("selected");
-        startGame.setLayoutX(29.0);
+        startGame.setLayoutX(41.5);
         startGame.setLayoutY(469.0);
         startGame.setPrefHeight(70.0);
-        startGame.setPrefWidth(292.0);
+        startGame.setPrefWidth(325.0);
         startGame.setOnAction((event) -> initializeGame());
 
         anchorPane.getChildren().add(startGame);
@@ -200,13 +199,14 @@ public class GamePresenter extends GameObserver {
 
     private void initializeGame() {
 
+
         anchorPane.getChildren().remove(gameDescription);
         anchorPane.getChildren().remove(startGame);
         anchorPane.getChildren().remove(difficultyEasyToggle);
         anchorPane.getChildren().remove(difficultyMediumToggle);
         anchorPane.getChildren().remove(difficultyHardToggle);
-
         Toggle difficultySelectedToggle = difficulty.getSelectedToggle();
+
         if (difficultySelectedToggle == null) {
             gameController = new GameController("SMALL");
         } else gameController = new GameController((String) difficultySelectedToggle.getUserData());
@@ -228,7 +228,6 @@ public class GamePresenter extends GameObserver {
         update();
         spawnTimer();
 
-
         Thread t2 = new Thread(() -> {
             while (true) {
                 try {
@@ -249,7 +248,7 @@ public class GamePresenter extends GameObserver {
         summary.setLayoutX(29.0);
         summary.setLayoutY(268.0);
         summary.setPrefHeight(91.0);
-        summary.setPrefWidth(300.0);
+        summary.setPrefWidth(350.0);
 
         summaryContinue.setOnAction(this::clickSummaryContinue);
         summaryContinue.setText("Continue");
@@ -267,7 +266,7 @@ public class GamePresenter extends GameObserver {
         scenarioDescription.setLayoutX(29.0);
         scenarioDescription.setLayoutY(268.0);
         scenarioDescription.setPrefHeight(100.0);
-        scenarioDescription.setPrefWidth(300.0);
+        scenarioDescription.setPrefWidth(350.0);
 
         choiceOne.setId("choiceOne");
         choiceOne.setOnAction(this::makeBusinessDecision);
@@ -321,7 +320,6 @@ public class GamePresenter extends GameObserver {
     private void flipChoiceMade() {
         choiceMade.set(!choiceMade.get());
     }
-
 
     public void makeDefaultBusinessDecision() {
         var game = gameController.getGame();
@@ -383,6 +381,7 @@ public class GamePresenter extends GameObserver {
     }
 
     private void tearDown() {
+        flipChoiceMade();
         anchorPane.getChildren().removeIf(i -> i.getId() == null);
     }
 
@@ -432,16 +431,20 @@ public class GamePresenter extends GameObserver {
         progressBar.setPrefWidth(303.0);
         progressBar.setProgress(0);
         progress.set(0.);
+
+
         if (checkGameDone()) {
             return;
         }
         Thread t = new Thread(() -> {
 
-            Platform.runLater(() ->
-                    anchorPane.getChildren().add(progressBar));
+            Platform.runLater(() ->{
+                anchorPane.getChildren().add(progressBar);
+            });
 
             while (true) {
                 if (choiceMade.get()) {
+                    System.out.println(choiceMade.get());
                     Platform.runLater(() ->
                             anchorPane.getChildren().remove(progressBar));
                     break;
