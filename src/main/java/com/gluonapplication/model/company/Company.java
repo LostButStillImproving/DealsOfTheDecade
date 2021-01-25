@@ -8,7 +8,9 @@ public interface Company {
 
 
     void updateBudgetConstant();
+
     void updateBudget();
+
     AtomicInteger getBudget();
 
     void makeBusinessDecision(String id, Game game);

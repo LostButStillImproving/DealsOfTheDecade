@@ -7,7 +7,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class PrimaryPresenter {
+public class HighscoresPresenter {
 
     @FXML
     private View primary;

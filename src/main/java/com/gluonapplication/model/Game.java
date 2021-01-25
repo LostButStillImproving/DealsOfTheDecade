@@ -68,10 +68,13 @@ public class Game implements Runnable {
         return date;
     }
     private void buildScenarioQueue() {
+
+        Collections.shuffle(this.scenarios);
         for (Scenario scenario:getScenarios())
             if (scenario.getID() == null) {
                 scenarioQueue.add(scenario);
             }
+
     }
 
     public void rebuildScenarioQueue(Integer scenarioID) {

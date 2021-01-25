@@ -5,20 +5,22 @@ import com.gluonapplication.model.choice.Choice;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class HugeCompany implements Company{
+public class HugeCompany implements Company {
 
     private final Double budgetConstant = 0.1;
+    private final AtomicInteger budget = new AtomicInteger(100000);
     private int IQ = 110;
     private Double reputation = 2.5;
-    private final AtomicInteger budget = new AtomicInteger(100000);
 
     @Override
     public void updateBudgetConstant() {
     }
+
     @Override
     public synchronized void updateBudget() {
         budget.incrementAndGet();
     }
+
     @Override
     public synchronized void makeBusinessDecision(String id, Game game) {
         if (id.equals("choiceOne")) {
@@ -50,10 +52,11 @@ public class HugeCompany implements Company{
 
     private void applyChoiceImpact(Game game, int choiceNumber) {
         Choice choice = game.getCurrentScenario().getChoices().get(choiceNumber - 1);
-        this.budget.addAndGet( choice.getBudgetEffect().intValue());
+        this.budget.addAndGet(choice.getBudgetEffect().intValue());
         this.IQ += choice.getIQEffect();
         this.reputation += choice.getRepEffect();
     }
+
     @Override
     public AtomicInteger getBudget() {
         return budget;
@@ -61,7 +64,7 @@ public class HugeCompany implements Company{
 
     @Override
     public String toString() {
-        return  this.getClass().getSimpleName()+"{" +
+        return this.getClass().getSimpleName() + "{" +
                 "budgetConstant=" + budgetConstant +
                 ", budget=" + budget +
                 ", IQ=" + IQ +

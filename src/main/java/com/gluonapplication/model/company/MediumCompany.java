@@ -1,4 +1,5 @@
 package com.gluonapplication.model.company;
+
 import com.gluonapplication.model.Game;
 import com.gluonapplication.model.choice.Choice;
 
@@ -7,21 +8,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MediumCompany implements Company {
 
     private final Double budgetConstant = 0.1;
+    private final AtomicInteger budget = new AtomicInteger(10000);
     private int IQ = 110;
     private Double reputation = 2.5;
-    private final AtomicInteger budget = new AtomicInteger(10000);
 
     @Override
     public AtomicInteger getBudget() {
         return budget;
     }
+
     @Override
     public void updateBudgetConstant() {
     }
+
     @Override
     public synchronized void updateBudget() {
         budget.incrementAndGet();
     }
+
     @Override
     public synchronized void makeBusinessDecision(String id, Game game) {
         if (id.equals("choiceOne")) {
@@ -40,6 +44,7 @@ public class MediumCompany implements Company {
         game.flipIsDecisionRound();
         game.setCurrentScenario();
     }
+
     @Override
     public double getReputation() {
         return this.reputation;
@@ -52,14 +57,14 @@ public class MediumCompany implements Company {
 
     private void applyChoiceImpact(Game game, int choiceNumber) {
         Choice choice = game.getCurrentScenario().getChoices().get(choiceNumber - 1);
-        this.budget.addAndGet( choice.getBudgetEffect().intValue());
+        this.budget.addAndGet(choice.getBudgetEffect().intValue());
         this.IQ += choice.getIQEffect();
         this.reputation += choice.getRepEffect();
     }
 
     @Override
     public String toString() {
-        return  this.getClass().getSimpleName()+"{" +
+        return this.getClass().getSimpleName() + "{" +
                 "budgetConstant=" + budgetConstant +
                 ", budget=" + budget +
                 ", IQ=" + IQ +

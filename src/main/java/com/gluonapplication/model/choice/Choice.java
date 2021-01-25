@@ -7,7 +7,7 @@ public class Choice {
     private final Double repEffect;  // additive
     private final Double IQEffect; // additive
     private final Double IQLimit; // FIND online grænser for dumme dyr og smarte mennesker
-    private String summary;
+    private final String summary;
 
     private Integer unlocksScenarioID;
 
@@ -29,6 +29,7 @@ public class Choice {
         this.summary = summary;
         this.unlocksScenarioID = unlocksScenarioID;
     }
+
     public String getDescription() {
         return description;
     }
@@ -40,9 +41,11 @@ public class Choice {
     public Integer getUnlocksScenarioID() {
         return unlocksScenarioID;
     }
+
     public Double getBudgetEffect() {
         return budgetEffect;
     }
+
     public Double getRepEffect() {
         return repEffect;
     }

@@ -25,37 +25,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Thread.sleep;
 
-public class SecondaryPresenter extends GameObserver {
-
-    @FXML
-    private View secondary;
-    @FXML
-    private AnchorPane anchorPane;
-    //GRAPHICS
-    @FXML
-    private ImageView cityGraphics;
-    @FXML
-    private ImageView reputationImage;
-
-    private  ImageView companyImage = new ImageView();
-    //Texts
-
-    AtomicReference<Double> progress = new AtomicReference<>((double) 0);
+public class GamePresenter extends GameObserver {
 
     private final Label businessDecision = new Label();
     @FXML
     private final Label scenarioDescription = new Label();
-
     private final Label summary = new Label();
-
     private final Label gameDescription = new Label();
-    @FXML
-    private Label budgetField;
-    @FXML
-    private Label dateField;
     //PROGRESS BAR
     @FXML
     private final ProgressBar progressBar = new ProgressBar();
+    //Texts
     //CHOICES BUTTONS
     @FXML
     private final Button choiceOne = new Button();
@@ -65,27 +45,32 @@ public class SecondaryPresenter extends GameObserver {
     private final Button choiceThree = new Button();
     @FXML
     private final Button choiceFour = new Button();
-
     private final Button summaryContinue = new Button();
-
     private final Button startGame = new Button();
-
     private final AtomicBoolean choiceMade = new AtomicBoolean(false);
-
     private final ToggleButton difficultyEasyToggle = new ToggleButton();
-
     private final ToggleButton difficultyMediumToggle = new ToggleButton();
-
     private final ToggleButton difficultyHardToggle = new ToggleButton();
-
     private final ToggleGroup difficulty = new ToggleGroup();
-    private GameController gameController;
-
-    private Game game;
-
-    private Stage stage;
-
     private final ArrayList<Control> decisionNodes = new ArrayList<>();
+    AtomicReference<Double> progress = new AtomicReference<>((double) 0);
+    @FXML
+    private View secondary;
+    @FXML
+    private AnchorPane anchorPane;
+    //GRAPHICS
+    @FXML
+    private ImageView cityGraphics;
+    @FXML
+    private ImageView reputationImage;
+    private final ImageView companyImage = new ImageView();
+    @FXML
+    private Label budgetField;
+    @FXML
+    private Label dateField;
+    private GameController gameController;
+    private Game game;
+    private Stage stage;
 
     public void initialize() {
         secondary.getApplication().getGlassPane();
@@ -122,45 +107,41 @@ public class SecondaryPresenter extends GameObserver {
         difficultyHardToggle.setPrefHeight(35);
         difficultyHardToggle.setUserData("HUGE");
 
-        difficultyEasyToggle.setOnAction(e->{
-            if(difficultyEasyToggle.isSelected()){
+        difficultyEasyToggle.setOnAction(e -> {
+            if (difficultyEasyToggle.isSelected()) {
                 difficultyEasyToggle.getStyleClass().add("selected");
                 difficultyMediumToggle.getStyleClass().add("unselected");
                 difficultyHardToggle.getStyleClass().add("unselected");
-            }
-            else{
+            } else {
                 difficultyEasyToggle.getStyleClass().add("unselected");
             }
         });
 
-        difficultyMediumToggle.setOnAction(e->{
-            if(difficultyMediumToggle.isSelected()){
+        difficultyMediumToggle.setOnAction(e -> {
+            if (difficultyMediumToggle.isSelected()) {
                 difficultyMediumToggle.getStyleClass().add("selected");
                 difficultyEasyToggle.getStyleClass().add("unselected");
                 difficultyHardToggle.getStyleClass().add("unselected");
-            }
-            else{
+            } else {
                 difficultyEasyToggle.getStyleClass().add("unselected");
             }
         });
 
-        difficultyMediumToggle.setOnAction(e->{
-            if(difficultyMediumToggle.isSelected()){
+        difficultyMediumToggle.setOnAction(e -> {
+            if (difficultyMediumToggle.isSelected()) {
                 difficultyMediumToggle.getStyleClass().add("selected");
                 difficultyEasyToggle.getStyleClass().add("unselected");
                 difficultyHardToggle.getStyleClass().add("unselected");
-            }
-            else{
+            } else {
                 difficultyMediumToggle.getStyleClass().add("unselected");
             }
         });
-        difficultyHardToggle.setOnAction(e->{
-            if(difficultyHardToggle.isSelected()){
+        difficultyHardToggle.setOnAction(e -> {
+            if (difficultyHardToggle.isSelected()) {
                 difficultyHardToggle.getStyleClass().add("selected");
                 difficultyEasyToggle.getStyleClass().add("unselected");
                 difficultyMediumToggle.getStyleClass().add("unselected");
-            }
-            else{
+            } else {
                 difficultyHardToggle.getStyleClass().add("unselected");
             }
         });
@@ -310,7 +291,7 @@ public class SecondaryPresenter extends GameObserver {
 
         game.flipIsDecisionRound();
         flipChoiceMade();
-        company.makeBusinessDecision(id,game);
+        company.makeBusinessDecision(id, game);
         removeDecisionPage();
         showSummaryPage(id);
     }
@@ -326,10 +307,11 @@ public class SecondaryPresenter extends GameObserver {
 
         game.flipIsDecisionRound();
         flipChoiceMade();
-        company.makeBusinessDecision("choiceFour",game);
+        company.makeBusinessDecision("choiceFour", game);
         removeDecisionPage();
         showSummaryPage("choiceFour");
     }
+
     private void showSummaryPage(String id) {
         Platform.runLater(() -> {
             anchorPane.getChildren().add(summary);
@@ -351,6 +333,7 @@ public class SecondaryPresenter extends GameObserver {
 
 
     }
+
     private void removeDecisionPage() {
         Platform.runLater(() -> {
             anchorPane.getChildren().remove(businessDecision);
@@ -362,11 +345,12 @@ public class SecondaryPresenter extends GameObserver {
             anchorPane.getChildren().remove(progressBar);
         });
     }
+
     public void clickSummaryContinue(Event event) {
         gameController.getGame().flipIsDecisionRound();
         removeSummaryPage();
 
-        for (Control node:this.decisionNodes) {
+        for (Control node : this.decisionNodes) {
             anchorPane.getChildren().add(node);
         }
         flipChoiceMade();
@@ -387,7 +371,7 @@ public class SecondaryPresenter extends GameObserver {
         progressBar.setPrefWidth(303.0);
         progressBar.setProgress(0);
         progress.set(0.);
-        Thread t= new Thread(() -> {
+        Thread t = new Thread(() -> {
 
             Platform.runLater(() ->
                     anchorPane.getChildren().add(progressBar));
@@ -461,23 +445,19 @@ public class SecondaryPresenter extends GameObserver {
             File file = new File("src/main/resources/graphics/reputation/veryangry.png");
             Image image = new Image(file.toURI().toString());
             reputationImage.setImage(image);
-        }
-        else if (reputation <= 2.0) {
+        } else if (reputation <= 2.0) {
             File file = new File("src/main/resources/graphics/reputation/angry.png");
             Image image = new Image(file.toURI().toString());
             reputationImage.setImage(image);
-        }
-        else if (reputation <= 3.0) {
+        } else if (reputation <= 3.0) {
             File file = new File("src/main/resources/graphics/reputation/neutral.png");
             Image image = new Image(file.toURI().toString());
             reputationImage.setImage(image);
-        }
-        else if (reputation <= 4.0) {
+        } else if (reputation <= 4.0) {
             File file = new File("src/main/resources/graphics/reputation/happy.png");
             Image image = new Image(file.toURI().toString());
             reputationImage.setImage(image);
-        }
-        else if (reputation <= 5.0) {
+        } else if (reputation <= 5.0) {
             File file = new File("src/main/resources/graphics/reputation/loved.png");
             Image image = new Image(file.toURI().toString());
             reputationImage.setImage(image);
@@ -492,6 +472,7 @@ public class SecondaryPresenter extends GameObserver {
 
         scenarioDescription.setText(getScenarioText());
     }
+
     private void updateChoiceButtons() {
 
         choiceOne.setText(getChoiceDescription(0));
@@ -503,9 +484,11 @@ public class SecondaryPresenter extends GameObserver {
     private String getScenarioText() {
         return gameController.getGame().getCurrentScenario().getScenarioText();
     }
+
     private String getChoiceDescription(int i) {
         return gameController.getGame().getCurrentScenario().getChoices().get(i).getDescription();
     }
+
     private String getSummary(int i) {
         return gameController.getGame().getCurrentScenario().getChoices().get(i).getSummary();
     }

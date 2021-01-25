@@ -1,7 +1,7 @@
 package com.gluonapplication;
 
-import com.gluonapplication.views.PrimaryView;
-import com.gluonapplication.views.SecondaryView;
+import com.gluonapplication.views.HighscoresView;
+import com.gluonapplication.views.GameView;
 import com.gluonhq.attach.storage.StorageService;
 import com.gluonhq.attach.util.Services;
 import com.gluonhq.attach.util.impl.ServiceFactory;
@@ -15,13 +15,13 @@ import java.util.Optional;
 
 public class GluonApplication extends MobileApplication {
 
-    public static  final String PRIMARY_VIEW = "Primary View";
-    public static final String SECONDARY_VIEW = HOME_VIEW;
+    public static  final String PRIMARY_VIEW = HOME_VIEW;
+    public static final String SECONDARY_VIEW = "Secondary View";
     
     @Override
     public void init() {
-        addViewFactory(PRIMARY_VIEW, () -> new PrimaryView().getView());
-        addViewFactory(SECONDARY_VIEW, () -> new SecondaryView().getView());
+        addViewFactory(PRIMARY_VIEW, () -> new HighscoresView().getView());
+        addViewFactory(SECONDARY_VIEW, () -> new GameView().getView());
         DrawerManager.buildDrawer(this);
     }
 

@@ -113,8 +113,8 @@
                         <list>com.gluonapplication.views.secondary</list>
                     </bundlesList>
                     <reflectionList>
-                        <list>com.gluonapplication.views.PrimaryPresenter</list>
-                        <list>com.gluonapplication.views.SecondaryPresenter</list>
+                        <list>com.gluonapplication.views.HighscoresPresenter</list>
+                        <list>com.gluonapplication.views.GamePresenter</list>
                     </reflectionList>
                     <mainClass>${mainClassName}</mainClass>
                 </configuration>
