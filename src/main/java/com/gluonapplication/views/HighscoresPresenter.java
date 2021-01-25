@@ -20,7 +20,7 @@ public class HighscoresPresenter {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().getDrawer().open()));
-                appBar.setTitleText("Primary");
+                appBar.setTitleText("Highscores");
             }
         });
     }

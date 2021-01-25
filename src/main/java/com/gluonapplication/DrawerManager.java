@@ -20,7 +20,7 @@ public class DrawerManager {
     public static void buildDrawer(MobileApplication app) {
         NavigationDrawer drawer = app.getDrawer();
         
-        NavigationDrawer.Header header = new NavigationDrawer.Header("Business At The End Of The World", "",
+        NavigationDrawer.Header header = new NavigationDrawer.Header("Deals of the Decade", "",
                 new Avatar(21, new Image(DrawerManager.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
 

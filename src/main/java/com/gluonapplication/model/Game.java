@@ -29,13 +29,14 @@ public class Game implements Runnable {
     private LocalDate date = LocalDate.of(2020,1,1);
     private Scenario currentScenario;
     private boolean decisionRound = true;
+
     public void setCurrentScenario() {
         if (!scenarioQueue.isEmpty()) {
             this.currentScenario = scenarioQueue.poll();
             notifyAllObservers();
         }
-        System.out.println(currentScenario.getScenarioText());
     }
+
     public Scenario getCurrentScenario() {
         return currentScenario;
     }
@@ -55,7 +56,6 @@ public class Game implements Runnable {
         buildScenarioQueue();
         setCurrentScenario();
     }
-
     public Boolean gameDone() {
         return getCompany().getBudget().get() < 0;
     }
@@ -67,6 +67,10 @@ public class Game implements Runnable {
     public LocalDate getDate() {
         return date;
     }
+    private void increaseDate() {
+        date = date.plusDays(1);
+    }
+
     private void buildScenarioQueue() {
 
         Collections.shuffle(this.scenarios);
@@ -74,9 +78,7 @@ public class Game implements Runnable {
             if (scenario.getID() == null) {
                 scenarioQueue.add(scenario);
             }
-
     }
-
     public void rebuildScenarioQueue(Integer scenarioID) {
 
         this.scenarios.remove(0);
@@ -87,7 +89,6 @@ public class Game implements Runnable {
                 scenarioQueue.add(scenario);
             }
     }
-
     private void buildScenarios() {
 
         Scenario coronaScenario = new Scenario("Scenario: \n" +
@@ -116,9 +117,6 @@ public class Game implements Runnable {
         this.scenarios.add(chinaNuclearWar);
     }
 
-    private void increaseDate() {
-        date = date.plusDays(1);
-    }
 
 
     @Override

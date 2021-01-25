@@ -28,6 +28,7 @@ public class MediumCompany implements Company {
 
     @Override
     public synchronized void makeBusinessDecision(String id, Game game) {
+
         if (id.equals("choiceOne")) {
             applyChoiceImpact(game, 1);
         }

@@ -9,6 +9,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,11 +20,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Thread.sleep;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GamePresenter extends GameObserver {
 
@@ -47,6 +50,7 @@ public class GamePresenter extends GameObserver {
     private final Button choiceFour = new Button();
     private final Button summaryContinue = new Button();
     private final Button startGame = new Button();
+    private final Button newGame = new Button();
     private final AtomicBoolean choiceMade = new AtomicBoolean(false);
     private final ToggleButton difficultyEasyToggle = new ToggleButton();
     private final ToggleButton difficultyMediumToggle = new ToggleButton();
@@ -54,6 +58,9 @@ public class GamePresenter extends GameObserver {
     private final ToggleGroup difficulty = new ToggleGroup();
     private final ArrayList<Control> decisionNodes = new ArrayList<>();
     AtomicReference<Double> progress = new AtomicReference<>((double) 0);
+
+    private final Label endGameTextField = new Label();
+
     @FXML
     private View secondary;
     @FXML
@@ -70,20 +77,30 @@ public class GamePresenter extends GameObserver {
     private Label dateField;
     private GameController gameController;
     private Game game;
-    private Stage stage;
+
 
     public void initialize() {
-        secondary.getApplication().getGlassPane();
+        MobileApplication.getInstance().getGlassPane().setPrefHeight(200);
+        MobileApplication.getInstance().getGlassPane().setPrefWidth(200);
         secondary.setShowTransitionFactory(BounceInRightTransition::new);
         secondary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e ->
                         MobileApplication.getInstance().getDrawer().open()));
-                appBar.setTitleText("Secondary");
+                appBar.setTitleText("Deals of The Decade");
             }
         });
+        difficulty.getToggles().add(difficultyEasyToggle);
+        difficulty.getToggles().add(difficultyMediumToggle);
+        difficulty.getToggles().add(difficultyHardToggle);
+        buildStartPage();
+    }
 
+    private void buildStartPage() {
+
+        dateField.toFront();
+        dateField.setLayoutX(275);
         gameDescription.setText("Welcome to GameName!\nIn this game you'll be asked to make\nsome hard hitting questions\nDon't let your budget hit zero, or you lose");
         gameDescription.setLayoutX(29.0);
         gameDescription.setLayoutY(268.0);
@@ -150,12 +167,6 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().add(difficultyMediumToggle);
         anchorPane.getChildren().add(difficultyHardToggle);
 
-
-        difficulty.getToggles().add(difficultyEasyToggle);
-        difficulty.getToggles().add(difficultyMediumToggle);
-        difficulty.getToggles().add(difficultyHardToggle);
-
-
         startGame.setText("Start Game!");
         startGame.getStyleClass().add("selected");
         startGame.setLayoutX(29.0);
@@ -165,7 +176,6 @@ public class GamePresenter extends GameObserver {
         startGame.setOnAction((event) -> initializeGame());
 
         anchorPane.getChildren().add(startGame);
-
     }
 
     private void initializeGame() {
@@ -190,6 +200,7 @@ public class GamePresenter extends GameObserver {
         companyImage.setLayoutY(200);
         companyImage.setImage((image));
         anchorPane.getChildren().add(companyImage);
+        companyImage.toFront();
 
         decisionNodes.add(businessDecision);
         decisionNodes.add(scenarioDescription);
@@ -295,7 +306,6 @@ public class GamePresenter extends GameObserver {
         removeDecisionPage();
         showSummaryPage(id);
     }
-
     private void flipChoiceMade() {
         choiceMade.set(!choiceMade.get());
     }
@@ -330,8 +340,41 @@ public class GamePresenter extends GameObserver {
                 summary.setText(getSummary(3));
             }
         });
+    }
 
+    private void showGameOverPage() {
 
+        LocalDate startDate = LocalDate.of(2020,1,1);
+        LocalDate endDate = game.getDate();
+        long daysBetween = DAYS.between(startDate, endDate);
+        String endGameText = "Game is over!\n The Company managed to survive until " + endDate.toString()
+                + ",\n for a total of " + daysBetween + " days";
+        endGameTextField.setText(endGameText);
+        endGameTextField.setLayoutX(29.0);
+        endGameTextField.setLayoutY(268.0);
+        endGameTextField.setPrefHeight(91.0);
+        endGameTextField.setPrefWidth(375.0);
+        anchorPane.getChildren().add(endGameTextField);
+
+        newGame.setOnAction(this::clickNextGame);
+        newGame.setText("Continue");
+        newGame.setLayoutX(26.0);
+        newGame.setLayoutY(385.0);
+        newGame.setPrefHeight(70.0);
+        newGame.setPrefWidth(139.0);
+        anchorPane.getChildren().add(newGame);
+    }
+
+    private void clickNextGame(ActionEvent event) {
+        tearDown();
+        buildStartPage();
+    }
+
+    private void tearDown() {
+
+        anchorPane.getChildren().remove(newGame);
+        anchorPane.getChildren().remove(endGameTextField);
+        anchorPane.getChildren().remove(companyImage);
     }
 
     private void removeDecisionPage() {
@@ -349,7 +392,10 @@ public class GamePresenter extends GameObserver {
     public void clickSummaryContinue(Event event) {
         gameController.getGame().flipIsDecisionRound();
         removeSummaryPage();
-
+        if (game.gameDone()) {
+            showGameOverPage();
+            return;
+        }
         for (Control node : this.decisionNodes) {
             anchorPane.getChildren().add(node);
         }
@@ -357,6 +403,7 @@ public class GamePresenter extends GameObserver {
         spawnTimer();
         updateScenarioDescription();
         updateChoiceButtons();
+
     }
 
     private void removeSummaryPage() {
@@ -371,6 +418,9 @@ public class GamePresenter extends GameObserver {
         progressBar.setPrefWidth(303.0);
         progressBar.setProgress(0);
         progress.set(0.);
+        if (checkGameDone()) {
+            return;
+        }
         Thread t = new Thread(() -> {
 
             Platform.runLater(() ->
@@ -412,6 +462,10 @@ public class GamePresenter extends GameObserver {
             updateDateField();
             updateCompanyImage();
         });
+    }
+
+    private Boolean checkGameDone() {
+        return game.gameDone();
     }
 
     private void updateCompanyImage() {
