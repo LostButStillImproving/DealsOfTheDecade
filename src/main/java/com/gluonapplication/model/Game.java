@@ -129,7 +129,8 @@ public class Game implements Runnable {
 
         Scenario bitcoinScenario = new Scenario("Scenario: \n" +
                 "With inspiration from r/wallstreetbets,\n your most trusted advisor wants The Company\n to invest in Bitcoin to secure The Company’s\n economic future, what do you?");
-        bitcoinScenario.addChoice(new Choice("Take a ride with BTC to the moon! (All in)",calculateReward((double) getCompany().getBudget().get()), 0.5, 5.0, 90., "blabla"));
+        bitcoinScenario.addChoice(new Choice("Take a ride with BTC to the moon! (All in)",calculateReward((double) getCompany().getBudget().get()), 0.5, 5.0, 90., "blabla",
+                "bitcoinMoon.png", "moonImage"));
         bitcoinScenario.addChoice(new Choice("Invest 10% of the budget",calculateReward((double) getCompany().getBudget().get() * 0.1), 0.5, 5.0, 90., "blabla"));
         bitcoinScenario.addChoice(new Choice("Fire them. They are obviously incompetent",-200.0, 0.5, 5.0, 90., "blabla"));
         bitcoinScenario.addChoice(new Choice("Do nothing!",0., 0., 5.0, 90., "blabla"));

@@ -17,14 +17,11 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -74,13 +71,14 @@ public class GamePresenter extends GameObserver {
     @FXML
     private ImageView reputationImage;
     private final ImageView companyImage = new ImageView();
+
+    private final ImageView moonImage = new ImageView();
     @FXML
     private Label budgetField;
     @FXML
     private Label dateField;
     private GameController gameController;
     private Game game;
-
 
     public void initialize() {
         MobileApplication.getInstance().getGlassPane().setPrefHeight(200);
@@ -102,8 +100,16 @@ public class GamePresenter extends GameObserver {
 
     private void buildStartPage() {
 
+        File moonFile = new File("src/main/resources/graphics/events/regularMoon.png");
+        Image imageMoon = new Image(moonFile.toURI().toString());
+        moonImage.setImage(imageMoon);
+        moonImage.setLayoutY(50);
+        moonImage.setLayoutX(300);
+        anchorPane.getChildren().add(moonImage);
+
         File fileCity = new File("src/main/resources/graphics/city/city.png");
         Image imageCity = new Image(fileCity.toURI().toString());
+
         dateField.toFront();
         cityGraphics.setFitHeight(249.0);
         cityGraphics.setFitWidth(350.0);
@@ -112,7 +118,6 @@ public class GamePresenter extends GameObserver {
         cityGraphics.setPickOnBounds(true);
         anchorPane.getChildren().add(cityGraphics);
         cityGraphics.toBack();
-        System.out.println(cityGraphics.getFitHeight()/526);
 
         File fileCompany = new File("src/main/resources/graphics/company/smallCompany.png");
         Image imageCompany = new Image(fileCompany.toURI().toString());
@@ -335,12 +340,16 @@ public class GamePresenter extends GameObserver {
                 break;
         }
 
-        if (choice.getImageName() != null) {
+        if (choice.getImageName() != null & choice.getFieldName() == null) {
             createImageAndSet(   choice.getImageName(),
                                     choice.getLayoutX(),
                                     choice.getLayoutY(),
                                   choice.getPrefWidth(),
                                   choice.getPrefHeight());
+        }
+
+        if (choice.getFieldName() != null) {
+            createImageAndSet(choice.getImageName(), choice.getFieldName());
         }
 
         company.makeBusinessDecision(id, game);
@@ -359,6 +368,17 @@ public class GamePresenter extends GameObserver {
 
         anchorPane.getChildren().add(imageView);
     }
+
+    public void createImageAndSet(String imageName, String fieldName) {
+
+        if (fieldName.equals("moonImage")) {
+
+            File file = new File("src/main/resources/graphics/events/" + imageName);
+            javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
+            moonImage.setImage(image);
+        }
+    }
+
     private void flipChoiceMade() {
         choiceMade.set(!choiceMade.get());
     }

@@ -19,7 +19,21 @@ public class Choice {
     private Double prefHeight;
     private String imageName;
 
+    private String fieldName;
+
     private Integer unlocksScenarioID;
+
+    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary, String imageName, String fieldName) {
+        this.description = description;
+        this.budgetEffect = budgetEffect;
+        this.repEffect = repEffect;
+        this.IQEffect = IQEffect;
+        this.IQLimit = IQLimit;
+        this.summary = summary;
+        this.imageName = imageName;
+        this.fieldName = fieldName;
+    }
+
 
 
     public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary) {
@@ -29,6 +43,10 @@ public class Choice {
         this.IQEffect = IQEffect;
         this.IQLimit = IQLimit;
         this.summary = summary;
+    }
+
+    public String getFieldName() {
+        return fieldName;
     }
 
     public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary, Integer unlocksScenarioID) {
