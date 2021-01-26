@@ -2,6 +2,7 @@ package com.gluonapplication.views;
 
 import com.gluonapplication.GameController;
 import com.gluonapplication.model.Game;
+import com.gluonapplication.model.choice.Choice;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -111,11 +112,14 @@ public class GamePresenter extends GameObserver {
         cityGraphics.setPickOnBounds(true);
         anchorPane.getChildren().add(cityGraphics);
         cityGraphics.toBack();
+        System.out.println(cityGraphics.getFitHeight()/526);
 
         File fileCompany = new File("src/main/resources/graphics/company/smallCompany.png");
         Image imageCompany = new Image(fileCompany.toURI().toString());
         companyImage.setLayoutX(200.);
         companyImage.setLayoutY(200);
+        companyImage.setFitWidth(82.);
+        companyImage.setFitHeight(43.);
         companyImage.setImage((imageCompany));
         anchorPane.getChildren().add(companyImage);
 
@@ -310,12 +314,50 @@ public class GamePresenter extends GameObserver {
         var id = source.getId();
         var game = gameController.getGame();
         var company = game.getCompany();
-
         game.flipIsDecisionRound();
         flipChoiceMade();
-        company.makeBusinessDecision(id, game);
         removeDecisionPage();
         showSummaryPage(id);
+        Choice choice;
+
+        switch (id) {
+            case "choiceOne":
+                choice = game.getCurrentScenario().getChoices().get(0);
+                break;
+            case "choiceTwo":
+                choice = game.getCurrentScenario().getChoices().get(1);
+                break;
+            case "choiceThree":
+                choice = game.getCurrentScenario().getChoices().get(2);
+                break;
+            default:
+                choice = game.getCurrentScenario().getChoices().get(3);
+                break;
+        }
+
+        if (choice.getImageName() != null) {
+            createImageAndSet(   choice.getImageName(),
+                                    choice.getLayoutX(),
+                                    choice.getLayoutY(),
+                                  choice.getPrefWidth(),
+                                  choice.getPrefHeight());
+        }
+
+        company.makeBusinessDecision(id, game);
+    }
+
+    public void createImageAndSet(String imageName, double layoutX, double layoutY, double prefWidth, double prefheight) {
+
+        ImageView imageView = new ImageView();
+        File file = new File("src/main/resources/graphics/events/" + imageName);
+        javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
+        imageView.setImage(image);
+        imageView.setLayoutX(layoutX);
+        imageView.setLayoutY(layoutY);
+        imageView.setFitWidth(prefWidth);
+        imageView.setFitHeight(prefheight);
+
+        anchorPane.getChildren().add(imageView);
     }
     private void flipChoiceMade() {
         choiceMade.set(!choiceMade.get());
@@ -374,7 +416,6 @@ public class GamePresenter extends GameObserver {
         newGame.setPrefWidth(139.0);
         anchorPane.getChildren().add(newGame);
     }
-
     private void clickNextGame(ActionEvent event) {
         tearDown();
         buildStartPage();
@@ -485,25 +526,45 @@ public class GamePresenter extends GameObserver {
         return game.gameDone();
     }
 
+
     private void updateCompanyImage() {
+
+        double sizeRatioHeight = cityGraphics.getFitHeight()/526;
+        double sizeRatioWidth  = cityGraphics.getFitWidth()/526;
+
+
         if (gameController.getGame().getCompany().getBudgetConstant() <= 1.1) {
+
             File file = new File("src/main/resources/graphics/company/smallCompany.png");
             Image image = new Image(file.toURI().toString());
             companyImage.setImage(image);
+            companyImage.setFitWidth(82. * sizeRatioWidth);
+            companyImage.setFitHeight(43. * sizeRatioHeight);
+
         } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.2) {
+
             File file = new File("src/main/resources/graphics/company/smallNiceCompany.png");
             Image image = new Image(file.toURI().toString());
             companyImage.setImage(image);
+            companyImage.setFitWidth(82. * sizeRatioWidth);
+            companyImage.setFitHeight(43. * sizeRatioHeight);
+
         } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.3) {
+
             File file = new File("src/main/resources/graphics/company/mediumCompany.png");
             Image image = new Image(file.toURI().toString());
             companyImage.setImage(image);
+            companyImage.setFitWidth(120. * sizeRatioWidth);
+            companyImage.setFitHeight(74. * sizeRatioHeight);
+
         } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.4) {
+
             File file = new File("src/main/resources/graphics/company/largeCompany.png");
             Image image = new Image(file.toURI().toString());
             companyImage.setImage(image);
+            companyImage.setFitWidth(120. * sizeRatioWidth);
+            companyImage.setFitHeight(101. * sizeRatioHeight);
         }
-
     }
 
     private void updateDateField() {

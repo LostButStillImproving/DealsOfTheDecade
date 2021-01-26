@@ -1,5 +1,10 @@
 package com.gluonapplication.model.choice;
 
+import com.gluonapplication.views.GamePresenter;
+
+import java.awt.*;
+import java.io.File;
+
 public class Choice {
 
     private final String description;
@@ -8,8 +13,14 @@ public class Choice {
     private final Double IQEffect; // additive
     private final Double IQLimit; // FIND online grænser for dumme dyr og smarte mennesker
     private final String summary;
+    private Double layoutX;
+    private Double layoutY;
+    private Double prefWidth;
+    private Double prefHeight;
+    private String imageName;
 
     private Integer unlocksScenarioID;
+
 
     public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary) {
         this.description = description;
@@ -21,6 +32,7 @@ public class Choice {
     }
 
     public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary, Integer unlocksScenarioID) {
+
         this.description = description;
         this.budgetEffect = budgetEffect;
         this.repEffect = repEffect;
@@ -28,6 +40,41 @@ public class Choice {
         this.IQLimit = IQLimit;
         this.summary = summary;
         this.unlocksScenarioID = unlocksScenarioID;
+    }
+
+    public Double getLayoutX() {
+        return layoutX;
+    }
+
+    public Double getLayoutY() {
+        return layoutY;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public Choice(String description,
+                  Double budgetEffect,
+                  Double repEffect,
+                  Double IQEffect,
+                  Double IQLimit,
+                  String summary,
+                  Integer unlocksScenarioID,
+                  String imageName, double layoutX, double layoutY, double prefWidth, double prefHeight) {
+
+        this.description = description;
+        this.budgetEffect = budgetEffect;
+        this.repEffect = repEffect;
+        this.IQEffect = IQEffect;
+        this.IQLimit = IQLimit;
+        this.summary = summary;
+        this.unlocksScenarioID = unlocksScenarioID;
+        this.layoutX = layoutX;
+        this.layoutY = layoutY;
+        this.prefHeight = prefHeight;
+        this.prefWidth = prefWidth;
+        this.imageName = imageName;
     }
 
     public String getDescription() {
@@ -56,6 +103,14 @@ public class Choice {
 
     public Double getIQLimit() {
         return IQLimit;
+    }
+
+    public Double getPrefWidth() {
+        return prefWidth;
+    }
+
+    public Double getPrefHeight() {
+        return prefHeight;
     }
 }
 

@@ -4,8 +4,12 @@ import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
+
+import java.awt.*;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 public class Game implements Runnable {
@@ -118,6 +122,14 @@ public class Game implements Runnable {
 
         Scenario greenEnergy = new Scenario("Scenario: \n" +
                 "After several years, you will find that more companies are starting to go green,\n and to your surprise, they are doing extremely satisfactorily, WWYD?");
+        greenEnergy.addChoice(new Choice("Go green!",10000., 1., -5.0, 0.0, "bla"));
+        greenEnergy.addChoice(new Choice("Pollution is a social construct and doesn’t really exis",-200.0, 0.5, 5.0, 90., "blabla"));
+        greenEnergy.addChoice(new Choice("Nuclear Power, baby!", 200., -2., -10., 0., "blablala", null,
+                "PowerPlant.png",
+                41.5, 75,
+                69.,132. ));
+        greenEnergy.addChoice(new Choice("Do nothing!",-2000., 0.1, -5., 0., "blablabla"));
+        this.scenarios.add(greenEnergy);
     }
 
     @Override
