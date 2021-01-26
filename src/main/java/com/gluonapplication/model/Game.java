@@ -115,9 +115,10 @@ public class Game implements Runnable {
         chinaNuclearWar.addChoice(new Choice("Beg for forgiveness ", 200., -2., -10., 0., "blablala"));
         chinaNuclearWar.addChoice(new Choice("Do nothing!", -2000., 0.1, -5., 0., "blablabla"));
         this.scenarios.add(chinaNuclearWar);
+
+        Scenario greenEnergy = new Scenario("Scenario: \n" +
+                "After several years, you will find that more companies are starting to go green,\n and to your surprise, they are doing extremely satisfactorily, WWYD?");
     }
-
-
 
     @Override
     public void run() {

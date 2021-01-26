@@ -16,7 +16,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -102,6 +103,7 @@ public class GamePresenter extends GameObserver {
 
         File fileCity = new File("src/main/resources/graphics/city/city.png");
         Image imageCity = new Image(fileCity.toURI().toString());
+        dateField.toFront();
         cityGraphics.setFitHeight(249.0);
         cityGraphics.setFitWidth(350.0);
         cityGraphics.setLayoutX(29.0);
@@ -118,11 +120,9 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().add(companyImage);
 
         companyImage.toFront();
-
-        dateField.toFront();
-        gameDescription.setText("Welcome to GameName!\nIn this game you'll be asked to make\nsome hard hitting questions\nDon't let your budget hit zero, or you lose");
-        gameDescription.setLayoutX(29.0);
-        gameDescription.setLayoutY(268.0);
+        gameDescription.setText("                Welcome to Deals Of The Decade!\n\nIn this game you'll be asked to make\nsome hard hitting questions\nDon't let your budget hit zero, or you lose");
+        gameDescription.setLayoutX(41.5);
+        gameDescription.setLayoutY(255.0);
         anchorPane.getChildren().add(gameDescription);
 
         difficultyEasyToggle.setLayoutY(430);
@@ -200,6 +200,7 @@ public class GamePresenter extends GameObserver {
     private void initializeGame() {
 
 
+        budgetField.setStyle("-fx-text-fill: black");
         anchorPane.getChildren().remove(gameDescription);
         anchorPane.getChildren().remove(startGame);
         anchorPane.getChildren().remove(difficultyEasyToggle);
@@ -227,7 +228,6 @@ public class GamePresenter extends GameObserver {
 
         update();
         spawnTimer();
-
         Thread t2 = new Thread(() -> {
             while (true) {
                 try {
@@ -245,17 +245,17 @@ public class GamePresenter extends GameObserver {
     private void constructButtonsAndLabels() {
 
         //Summary page nodes
-        summary.setLayoutX(29.0);
-        summary.setLayoutY(268.0);
-        summary.setPrefHeight(91.0);
+        summary.setLayoutX(41.5);
+        summary.setLayoutY(255.0);
+        summary.setPrefHeight(100.0);
         summary.setPrefWidth(350.0);
 
         summaryContinue.setOnAction(this::clickSummaryContinue);
         summaryContinue.setText("Continue");
-        summaryContinue.setLayoutX(26.0);
-        summaryContinue.setLayoutY(385.0);
+        summaryContinue.setLayoutX(41.5);
+        summaryContinue.setLayoutY(469.0);
         summaryContinue.setPrefHeight(70.0);
-        summaryContinue.setPrefWidth(139.0);
+        summaryContinue.setPrefWidth(325.0);
 
         //Decision page nodes
         businessDecision.setLayoutX(26.0);
@@ -263,35 +263,35 @@ public class GamePresenter extends GameObserver {
         businessDecision.setPrefHeight(18.0);
         businessDecision.setPrefWidth(126.0);
 
-        scenarioDescription.setLayoutX(29.0);
-        scenarioDescription.setLayoutY(268.0);
+        scenarioDescription.setLayoutX(41.5);
+        scenarioDescription.setLayoutY(255.0);
         scenarioDescription.setPrefHeight(100.0);
         scenarioDescription.setPrefWidth(350.0);
 
         choiceOne.setId("choiceOne");
         choiceOne.setOnAction(this::makeBusinessDecision);
-        choiceOne.setLayoutX(26.0);
+        choiceOne.setLayoutX(51.0);
         choiceOne.setLayoutY(385.0);
         choiceOne.setPrefHeight(70.0);
         choiceOne.setPrefWidth(139.0);
 
         choiceTwo.setId("choiceTwo");
         choiceTwo.setOnAction(this::makeBusinessDecision);
-        choiceTwo.setLayoutX(188.0);
+        choiceTwo.setLayoutX(213.0);
         choiceTwo.setLayoutY(388.0);
         choiceTwo.setPrefHeight(70.0);
         choiceTwo.setPrefWidth(139.0);
 
         choiceThree.setId("choiceThree");
         choiceThree.setOnAction(this::makeBusinessDecision);
-        choiceThree.setLayoutX(26.0);
+        choiceThree.setLayoutX(51.0);
         choiceThree.setLayoutY(469.0);
         choiceThree.setPrefHeight(70.0);
         choiceThree.setPrefWidth(139.0);
 
         choiceFour.setId("choiceFour");
         choiceFour.setOnAction(this::makeBusinessDecision);
-        choiceFour.setLayoutX(188.0);
+        choiceFour.setLayoutX(213.0);
         choiceFour.setLayoutY(469.0);
         choiceFour.setPrefHeight(70.0);
         choiceFour.setPrefWidth(139.0);
@@ -360,10 +360,10 @@ public class GamePresenter extends GameObserver {
         String endGameText = "Game is over!\n The Company managed to survive until " + endDate.toString()
                 + ",\n for a total of " + daysBetween + " days";
         endGameTextField.setText(endGameText);
-        endGameTextField.setLayoutX(29.0);
-        endGameTextField.setLayoutY(268.0);
-        endGameTextField.setPrefHeight(91.0);
-        endGameTextField.setPrefWidth(375.0);
+        endGameTextField.setLayoutX(41.5);
+        endGameTextField.setLayoutY(255.0);
+        endGameTextField.setPrefHeight(100.0);
+        endGameTextField.setPrefWidth(350.0);
         anchorPane.getChildren().add(endGameTextField);
 
         newGame.setOnAction(this::clickNextGame);
@@ -425,7 +425,7 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().remove(scenarioDescription);
     }
     private void spawnTimer() {
-        progressBar.setLayoutX(25.0);
+        progressBar.setLayoutX(51.0);
         progressBar.setLayoutY(557.0);
         progressBar.setPrefHeight(20.0);
         progressBar.setPrefWidth(303.0);
@@ -536,7 +536,7 @@ public class GamePresenter extends GameObserver {
     }
 
     private void updateBudgetField() {
-        budgetField.setText(String.valueOf(game.getCompany().getBudget().get()));
+        budgetField.setText(game.getCompany().getBudget().get() + "$");
     }
 
     private void updateScenarioDescription() {

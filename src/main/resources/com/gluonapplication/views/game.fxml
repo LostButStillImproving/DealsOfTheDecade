@@ -14,7 +14,7 @@
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    </children>
    <left>
-      <AnchorPane fx:id="anchorPane" minWidth="350.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPane" minWidth="350.0" prefHeight="600.0" prefWidth="512.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="reputationLabel" layoutX="285.0" layoutY="3.0" text="Reputation:" textFill="#ffffff">
                <font>
