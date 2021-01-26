@@ -73,6 +73,8 @@ public class GamePresenter extends GameObserver {
     private final ImageView companyImage = new ImageView();
 
     private final ImageView moonImage = new ImageView();
+
+    private ImageView overlay = new ImageView();
     @FXML
     private Label budgetField;
     @FXML
@@ -104,7 +106,9 @@ public class GamePresenter extends GameObserver {
         Image imageMoon = new Image(moonFile.toURI().toString());
         moonImage.setImage(imageMoon);
         moonImage.setLayoutY(50);
-        moonImage.setLayoutX(300);
+        moonImage.setLayoutX(340);
+        moonImage.setFitHeight(30);
+        moonImage.setFitWidth(30);
         anchorPane.getChildren().add(moonImage);
 
         File fileCity = new File("src/main/resources/graphics/city/city.png");
@@ -315,10 +319,15 @@ public class GamePresenter extends GameObserver {
     @FXML
     public void makeBusinessDecision(Event event) {
 
+        ///DONT DO THIS
+
         final Node source = (Node) event.getSource();
         var id = source.getId();
         var game = gameController.getGame();
         var company = game.getCompany();
+
+
+
         game.flipIsDecisionRound();
         flipChoiceMade();
         removeDecisionPage();
@@ -383,6 +392,7 @@ public class GamePresenter extends GameObserver {
         choiceMade.set(!choiceMade.get());
     }
 
+
     public void makeDefaultBusinessDecision() {
         var game = gameController.getGame();
         var company = game.getCompany();
@@ -398,20 +408,29 @@ public class GamePresenter extends GameObserver {
         Platform.runLater(() -> {
             anchorPane.getChildren().add(summary);
             anchorPane.getChildren().add(summaryContinue);
-            if (id.equals("choiceOne")) {
-                summary.setText(getSummary(0));
-            }
-            if (id.equals("choiceTwo")) {
-                summary.setText(getSummary(1));
-
-            }
-            if (id.equals("choiceThree")) {
-                summary.setText(getSummary(2));
-            }
-            if (id.equals("choiceFour")) {
-                summary.setText(getSummary(3));
-            }
         });
+
+        if (id.equals("choiceOne")) {
+            summary.setText(getSummary(0));
+            System.out.println(getSummary(0));
+            System.out.println("ChoiceOne");
+        }
+        if (id.equals("choiceTwo")) {
+            summary.setText(getSummary(1));
+            System.out.println(getSummary(1));
+            System.out.println("ChoiceTwo");
+        }
+        if (id.equals("choiceThree")) {
+            summary.setText(getSummary(2));
+            System.out.println(getSummary(2));
+            System.out.println("ChoiceThree");
+        }
+        if (id.equals("choiceFour")) {
+            summary.setText(getSummary(3));
+            System.out.println(getSummary(3));
+            System.out.println("ChoiceFour");
+        }
+
     }
 
     private void showGameOverPage() {
@@ -459,6 +478,16 @@ public class GamePresenter extends GameObserver {
     }
 
     public void clickSummaryContinue(Event event) {
+        /* DONT DO THIS
+        /* DONT DO THIS
+        /* DONT DO THIS
+        /* DONT DO THIS
+        /* DONT DO THIS
+        /* DONT DO THIS
+        /* DONT DO THIS
+        /* DONT DO THIS
+        }*/
+        checkIfVirus();
         gameController.getGame().flipIsDecisionRound();
         removeSummaryPage();
 
@@ -478,6 +507,28 @@ public class GamePresenter extends GameObserver {
         spawnTimer();
         updateScenarioDescription();
         updateChoiceButtons();
+    }
+
+    private void checkIfVirus() {
+        if (game.getCurrentScenario().getScenarioIDForImage() != null && !checkGameDone()) {
+            if (game.getCurrentScenario().getScenarioIDForImage().equals("2")) {
+                File file = new File("src/main/resources/graphics/MatrixShit.png");
+                Image image = new Image(file.toURI().toString());
+
+                overlay.setLayoutX(29.);
+                overlay.setFitWidth(cityGraphics.getFitWidth());
+                overlay.setFitHeight(cityGraphics.getFitHeight());
+                overlay.toFront();
+                overlay.setImage(image);
+
+                if (!anchorPane.getChildren().contains(overlay)) {
+                    anchorPane.getChildren().add(overlay);
+                }
+            }
+        } else {
+
+            overlay.setImage(null);
+        }
     }
 
     private void removeSummaryPage() {
@@ -539,6 +590,7 @@ public class GamePresenter extends GameObserver {
             updateRepIcon();
             updateDateField();
             updateCompanyImage();
+            //DONT DO THIS
         });
     }
 

@@ -10,6 +10,7 @@ public class Scenario {
     private final ArrayList<Choice> choices = new ArrayList<>();
     private final Integer ID;
 
+    private String scenarioIDForImage;
     public Scenario(String scenarioTextDescription, Integer id) {
         this.ID = id;
         scenarioText = scenarioTextDescription;
@@ -18,6 +19,16 @@ public class Scenario {
     public Scenario(String scenarioTextDescription) {
         this.ID = null;
         scenarioText = scenarioTextDescription;
+    }
+
+    public Scenario(String scenarioTextDescription, String scenarioIDForImage ) {
+        this.ID = null;
+        this.scenarioIDForImage = scenarioIDForImage;
+        scenarioText = scenarioTextDescription;
+    }
+
+    public String getScenarioIDForImage() {
+        return scenarioIDForImage;
     }
 
     public void addChoice(Choice choice) {
