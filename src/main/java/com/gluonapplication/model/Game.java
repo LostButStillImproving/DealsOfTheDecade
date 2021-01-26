@@ -4,9 +4,6 @@ import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
-
-import java.awt.*;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
@@ -67,7 +64,6 @@ public class Game implements Runnable {
     public Company getCompany() {
         return this.company;
     }
-
     public LocalDate getDate() {
         return date;
     }
@@ -130,6 +126,23 @@ public class Game implements Runnable {
                 69.,132. ));
         greenEnergy.addChoice(new Choice("Do nothing!",-2000., 0.1, -5., 0., "blablabla"));
         this.scenarios.add(greenEnergy);
+
+        Scenario bitcoinScenario = new Scenario("Scenario: \n" +
+                "With inspiration from r/wallstreetbets,\n your most trusted advisor wants The Company\n to invest in Bitcoin to secure The Company’s\n economic future, what do you?");
+        bitcoinScenario.addChoice(new Choice("Take a ride with BTC to the moon! (All in)",calculateReward((double) getCompany().getBudget().get()), 0.5, 5.0, 90., "blabla"));
+        bitcoinScenario.addChoice(new Choice("Invest 10% of the budget",calculateReward((double) getCompany().getBudget().get() * 0.1), 0.5, 5.0, 90., "blabla"));
+        bitcoinScenario.addChoice(new Choice("Fire them. They are obviously incompetent",-200.0, 0.5, 5.0, 90., "blabla"));
+        bitcoinScenario.addChoice(new Choice("Do nothing!",0., 0., 5.0, 90., "blabla"));
+        this.scenarios.add(bitcoinScenario);
+    }
+
+    public Double calculateReward(Double investedAmount) {
+
+        Random random = new Random();
+        Double multiplier = random.nextDouble() * 3 - 1;
+        var result = investedAmount * multiplier;
+
+        return result - investedAmount;
     }
 
     @Override

@@ -408,12 +408,12 @@ public class GamePresenter extends GameObserver {
         endGameTextField.setPrefWidth(350.0);
         anchorPane.getChildren().add(endGameTextField);
 
-        newGame.setOnAction(this::clickNextGame);
-        newGame.setText("Continue");
-        newGame.setLayoutX(26.0);
-        newGame.setLayoutY(385.0);
+        newGame.setLayoutX(41.5);
+        newGame.setLayoutY(469.0);
         newGame.setPrefHeight(70.0);
-        newGame.setPrefWidth(139.0);
+        newGame.setPrefWidth(325.0);
+        newGame.setOnAction(this::clickNextGame);
+        newGame.setText("New game!");
         anchorPane.getChildren().add(newGame);
     }
     private void clickNextGame(ActionEvent event) {
