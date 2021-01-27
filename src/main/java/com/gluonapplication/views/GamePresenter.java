@@ -133,7 +133,7 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().add(companyImage);
 
         companyImage.toFront();
-        gameDescription.setText("                Welcome to Deals Of The Decade!\n\nIn this game you'll be asked to make\nsome hard hitting questions\nDon't let your budget hit zero, or you lose");
+        gameDescription.setText("                Welcome to Deals Of The Decade!\n\nIn this game you'll be asked to make\nsome hard hitting decicions\n\nDon't let your budget hit zero, or you lose");
         gameDescription.setLayoutX(41.5);
         gameDescription.setLayoutY(255.0);
         anchorPane.getChildren().add(gameDescription);
@@ -284,7 +284,7 @@ public class GamePresenter extends GameObserver {
         choiceOne.setId("choiceOne");
         choiceOne.setOnAction(this::makeBusinessDecision);
         choiceOne.setLayoutX(51.0);
-        choiceOne.setLayoutY(385.0);
+        choiceOne.setLayoutY(388.0);
         choiceOne.setPrefHeight(70.0);
         choiceOne.setPrefWidth(139.0);
 
@@ -386,6 +386,11 @@ public class GamePresenter extends GameObserver {
             javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
             moonImage.setImage(image);
         }
+        if (fieldName.equals("cityGraphics")) {
+            File file = new File("src/main/resources/graphics/events/" + imageName);
+            javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
+            cityGraphics.setImage(image);
+        }
     }
 
     private void flipChoiceMade() {
@@ -437,9 +442,11 @@ public class GamePresenter extends GameObserver {
 
         LocalDate startDate = LocalDate.of(2020,1,1);
         LocalDate endDate = game.getDate();
+
         long daysBetween = DAYS.between(startDate, endDate);
         String endGameText = "Game is over!\n The Company managed to survive until " + endDate.toString()
                 + ",\n for a total of " + daysBetween + " days";
+
         endGameTextField.setText(endGameText);
         endGameTextField.setLayoutX(41.5);
         endGameTextField.setLayoutY(255.0);
@@ -466,6 +473,7 @@ public class GamePresenter extends GameObserver {
     }
 
     private void removeDecisionPage() {
+
         Platform.runLater(() -> {
             anchorPane.getChildren().remove(businessDecision);
             anchorPane.getChildren().remove(scenarioDescription);
@@ -510,6 +518,7 @@ public class GamePresenter extends GameObserver {
     }
 
     private void checkIfVirus() {
+
         if (game.getCurrentScenario().getScenarioIDForImage() != null && !checkGameDone()) {
             if (game.getCurrentScenario().getScenarioIDForImage().equals("2")) {
                 File file = new File("src/main/resources/graphics/MatrixShit.png");
@@ -532,11 +541,13 @@ public class GamePresenter extends GameObserver {
     }
 
     private void removeSummaryPage() {
+
         anchorPane.getChildren().remove(summary);
         anchorPane.getChildren().remove(summaryContinue);
         anchorPane.getChildren().remove(scenarioDescription);
     }
     private void spawnTimer() {
+
         progressBar.setLayoutX(51.0);
         progressBar.setLayoutY(557.0);
         progressBar.setPrefHeight(20.0);
@@ -546,6 +557,7 @@ public class GamePresenter extends GameObserver {
 
 
         if (checkGameDone()) {
+
             return;
         }
         Thread t = new Thread(() -> {
@@ -563,7 +575,7 @@ public class GamePresenter extends GameObserver {
                 }
                 try {
                     sleep(50);
-                    progress.updateAndGet(v -> v + 0.005);
+                    progress.updateAndGet(v -> v + 0.005/3.0);
                     progressBar.setProgress(progress.get());
 
                     if (progress.get() >= 1) {
@@ -590,14 +602,12 @@ public class GamePresenter extends GameObserver {
             updateRepIcon();
             updateDateField();
             updateCompanyImage();
-            //DONT DO THIS
         });
     }
 
     private Boolean checkGameDone() {
         return game.gameDone();
     }
-
 
     private void updateCompanyImage() {
 

@@ -34,6 +34,18 @@ public class Choice {
         this.fieldName = fieldName;
     }
 
+    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit,String summary,Integer unlocksScenarioID, String imageName, String fieldName) {
+        this.description = description;
+        this.budgetEffect = budgetEffect;
+        this.repEffect = repEffect;
+        this.IQEffect = IQEffect;
+        this.IQLimit = IQLimit;
+        this.summary = summary;
+        this.imageName = imageName;
+        this.fieldName = fieldName;
+        this.unlocksScenarioID = unlocksScenarioID;
+    }
+
 
 
     public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary) {
