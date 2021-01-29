@@ -3,7 +3,6 @@ package com.gluonapplication.model.company;
 import com.gluonapplication.model.Game;
 import com.gluonapplication.model.choice.Choice;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SmallCompany implements Company {
@@ -85,6 +84,19 @@ public class SmallCompany implements Company {
         if (choice.getUnlocksScenarioID() != null) {
             game.rebuildScenarioQueue(choice.getUnlocksScenarioID());
         }
+        if (choice.getMethodToBeApplied() != null) {
+            var methodToBeApplied = choice.getMethodToBeApplied();
+
+            if (methodToBeApplied.equals("calculateReward")) {
+                choice.calculateReward((double) this.getBudget().get());
+            }
+
+            if (methodToBeApplied.equals("calculateReward10")) {
+                System.out.println((double) this.getBudget().get() / 10);
+                choice.calculateReward((double) this.getBudget().get() / 10);
+            }
+        }
+
         this.budget.addAndGet( choice.getBudgetEffect().intValue());
         this.IQ += choice.getIQEffect();
 
@@ -94,7 +106,6 @@ public class SmallCompany implements Company {
             if (reputation > 5) reputation = 5.;
         }
         game.setCurrentScenario();
-
     }
 
     @Override

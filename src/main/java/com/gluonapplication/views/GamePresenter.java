@@ -29,26 +29,7 @@ import static java.lang.Thread.sleep;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GamePresenter extends GameObserver {
-
-    private final Label businessDecision = new Label();
-    @FXML
-    private final Label scenarioDescription = new Label();
-    private final Label summary = new Label();
-    private final Label gameDescription = new Label();
-    //PROGRESS BAR
-    @FXML
-    private final ProgressBar progressBar = new ProgressBar();
-    //Texts
-    //CHOICES BUTTONS
-    @FXML
-    private final Button choiceOne = new Button();
-    @FXML
-    private final Button choiceTwo = new Button();
-    @FXML
-    private final Button choiceThree = new Button();
-    @FXML
-    private final Button choiceFour = new Button();
-    private final Button summaryContinue = new Button();
+    //START PAGE NODES
     private final Button startGame = new Button();
     private final Button newGame = new Button();
     private final AtomicBoolean choiceMade = new AtomicBoolean(false);
@@ -56,8 +37,15 @@ public class GamePresenter extends GameObserver {
     private final ToggleButton difficultyMediumToggle = new ToggleButton();
     private final ToggleButton difficultyHardToggle = new ToggleButton();
     private final ToggleGroup difficulty = new ToggleGroup();
+
+    //DECISION PAGE NODES
+    private final Label businessDecision = new Label(),scenarioDescription = new Label(), summary = new Label(),
+            gameDescription = new Label();
+    private final ProgressBar progressBar = new ProgressBar();
+    private final Button choiceOne = new Button(), choiceTwo = new Button(), choiceThree = new Button(),
+            choiceFour = new Button(), summaryContinue = new Button();
+
     private final ArrayList<Control> decisionNodes = new ArrayList<>();
-    AtomicReference<Double> progress = new AtomicReference<>((double) 0);
 
     private final Label endGameTextField = new Label();
 
@@ -94,13 +82,16 @@ public class GamePresenter extends GameObserver {
                 appBar.setTitleText("Deals of The Decade");
             }
         });
-        difficulty.getToggles().add(difficultyEasyToggle);
-        difficulty.getToggles().add(difficultyMediumToggle);
-        difficulty.getToggles().add(difficultyHardToggle);
+        constructButtonsAndLabels();
+
         buildStartPage();
     }
 
     private void buildStartPage() {
+
+        difficulty.getToggles().add(difficultyEasyToggle);
+        difficulty.getToggles().add(difficultyMediumToggle);
+        difficulty.getToggles().add(difficultyHardToggle);
 
         File moonFile = new File("src/main/resources/graphics/events/regularMoon.png");
         Image imageMoon = new Image(moonFile.toURI().toString());
@@ -109,6 +100,7 @@ public class GamePresenter extends GameObserver {
         moonImage.setLayoutX(340);
         moonImage.setFitHeight(30);
         moonImage.setFitWidth(30);
+        moonImage.setId("moonImage");
         anchorPane.getChildren().add(moonImage);
 
         File fileCity = new File("src/main/resources/graphics/city/city.png");
@@ -120,8 +112,9 @@ public class GamePresenter extends GameObserver {
         cityGraphics.setLayoutX(29.0);
         cityGraphics.setImage(imageCity);
         cityGraphics.setPickOnBounds(true);
-        anchorPane.getChildren().add(cityGraphics);
         cityGraphics.toBack();
+        cityGraphics.setId("cityGraphics");
+        anchorPane.getChildren().add(cityGraphics);
 
         File fileCompany = new File("src/main/resources/graphics/company/smallCompany.png");
         Image imageCompany = new Image(fileCompany.toURI().toString());
@@ -133,7 +126,7 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().add(companyImage);
 
         companyImage.toFront();
-        gameDescription.setText("                Welcome to Deals Of The Decade!\n\nIn this game you'll be asked to make\nsome hard hitting decicions\n\nDon't let your budget hit zero, or you lose");
+        gameDescription.setText("                Welcome to Deals Of The Decade!\n\nIn this game you'll be asked to make\nsome hard hitting decisions\n\nDon't let your budget hit zero, or you lose");
         gameDescription.setLayoutX(41.5);
         gameDescription.setLayoutY(255.0);
         anchorPane.getChildren().add(gameDescription);
@@ -234,10 +227,7 @@ public class GamePresenter extends GameObserver {
         decisionNodes.add(choiceTwo);
         decisionNodes.add(choiceThree);
         decisionNodes.add(choiceFour);
-
-        constructButtonsAndLabels();
-        updateScenarioDescription();
-        updateChoiceButtons();
+        showDecisionPage();
 
         update();
         spawnTimer();
@@ -256,19 +246,6 @@ public class GamePresenter extends GameObserver {
     }
 
     private void constructButtonsAndLabels() {
-
-        //Summary page nodes
-        summary.setLayoutX(41.5);
-        summary.setLayoutY(255.0);
-        summary.setPrefHeight(100.0);
-        summary.setPrefWidth(350.0);
-
-        summaryContinue.setOnAction(this::clickSummaryContinue);
-        summaryContinue.setText("Continue");
-        summaryContinue.setLayoutX(41.5);
-        summaryContinue.setLayoutY(469.0);
-        summaryContinue.setPrefHeight(70.0);
-        summaryContinue.setPrefWidth(325.0);
 
         //Decision page nodes
         businessDecision.setLayoutX(26.0);
@@ -309,11 +286,81 @@ public class GamePresenter extends GameObserver {
         choiceFour.setPrefHeight(70.0);
         choiceFour.setPrefWidth(139.0);
 
-        anchorPane.getChildren().add(scenarioDescription);
-        anchorPane.getChildren().add(choiceOne);
-        anchorPane.getChildren().add(choiceTwo);
-        anchorPane.getChildren().add(choiceThree);
-        anchorPane.getChildren().add(choiceFour);
+        progressBar.setLayoutX(51.0);
+        progressBar.setLayoutY(557.0);
+        progressBar.setPrefHeight(20.0);
+        progressBar.setPrefWidth(303.0);
+        progressBar.setProgress(0);
+
+        //Summary page nodes
+        summary.setLayoutX(41.5);
+        summary.setLayoutY(255.0);
+        summary.setPrefHeight(100.0);
+        summary.setPrefWidth(350.0);
+
+        summaryContinue.setOnAction(this::clickSummaryContinue);
+        summaryContinue.setText("Continue");
+        summaryContinue.setLayoutX(41.5);
+        summaryContinue.setLayoutY(469.0);
+        summaryContinue.setPrefHeight(70.0);
+        summaryContinue.setPrefWidth(325.0);
+
+        // Game Over nodes
+        endGameTextField.setLayoutX(41.5);
+        endGameTextField.setLayoutY(255.0);
+        endGameTextField.setPrefHeight(100.0);
+        endGameTextField.setPrefWidth(350.0);
+
+        newGame.setLayoutX(41.5);
+        newGame.setLayoutY(469.0);
+        newGame.setPrefHeight(70.0);
+        newGame.setPrefWidth(325.0);
+        newGame.setOnAction(this::clickNextGame);
+        newGame.setText("New game!");
+    }
+
+    public void createImageAndSet(String imageName, String nodeID, double layoutX, double layoutY, double prefWidth, double prefheight) {
+
+        ImageView imageView = new ImageView();
+        File file = new File("src/main/resources/graphics/events/" + imageName);
+        javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
+        imageView.setImage(image);
+        imageView.setLayoutX(layoutX);
+        imageView.setLayoutY(layoutY);
+        imageView.setFitWidth(prefWidth);
+        imageView.setFitHeight(prefheight);
+        imageView.setId(nodeID);
+
+        anchorPane.getChildren().add(imageView);
+    }
+
+    public void createImageAndSet(String imageName, String nodeID) {
+
+        anchorPane.getChildren().forEach(i -> {
+            if (i.getId() != null) {
+                if (i.getId().equals(nodeID)) {
+                    ImageView imageView = (ImageView) i;
+                    File file = new File("src/main/resources/graphics/events/" + imageName);
+                    javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
+                    imageView.setImage(image);
+                }
+            }
+        });
+    }
+
+    private void flipChoiceMade() {
+        choiceMade.set(!choiceMade.get());
+    }
+
+    public void makeDefaultBusinessDecision() {
+        var game = gameController.getGame();
+        var company = game.getCompany();
+
+        game.flipIsDecisionRound();
+        flipChoiceMade();
+        company.makeBusinessDecision("choiceFour", game);
+        removeDecisionPage();
+        showSummaryPage("choiceFour");
     }
 
     @FXML
@@ -325,8 +372,6 @@ public class GamePresenter extends GameObserver {
         var id = source.getId();
         var game = gameController.getGame();
         var company = game.getCompany();
-
-
 
         game.flipIsDecisionRound();
         flipChoiceMade();
@@ -349,64 +394,31 @@ public class GamePresenter extends GameObserver {
                 break;
         }
 
-        if (choice.getImageName() != null & choice.getFieldName() == null) {
-            createImageAndSet(   choice.getImageName(),
+        if (choice.getImageName() != null && choice.getLayoutX() == null) {
+            createImageAndSet(choice.getImageName(), choice.getNodeID());
+        }
+        if (choice.getImageName() != null & choice.getLayoutX() !=  null) {
+            createImageAndSet(   choice.getImageName(), choice.getNodeID(),
                                     choice.getLayoutX(),
                                     choice.getLayoutY(),
                                   choice.getPrefWidth(),
                                   choice.getPrefHeight());
         }
 
-        if (choice.getFieldName() != null) {
-            createImageAndSet(choice.getImageName(), choice.getFieldName());
-        }
+
 
         company.makeBusinessDecision(id, game);
     }
 
-    public void createImageAndSet(String imageName, double layoutX, double layoutY, double prefWidth, double prefheight) {
+    public void showDecisionPage() {
 
-        ImageView imageView = new ImageView();
-        File file = new File("src/main/resources/graphics/events/" + imageName);
-        javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
-        imageView.setImage(image);
-        imageView.setLayoutX(layoutX);
-        imageView.setLayoutY(layoutY);
-        imageView.setFitWidth(prefWidth);
-        imageView.setFitHeight(prefheight);
-
-        anchorPane.getChildren().add(imageView);
-    }
-
-    public void createImageAndSet(String imageName, String fieldName) {
-
-        if (fieldName.equals("moonImage")) {
-
-            File file = new File("src/main/resources/graphics/events/" + imageName);
-            javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
-            moonImage.setImage(image);
-        }
-        if (fieldName.equals("cityGraphics")) {
-            File file = new File("src/main/resources/graphics/events/" + imageName);
-            javafx.scene.image.Image image = new javafx.scene.image.Image(file.toURI().toString());
-            cityGraphics.setImage(image);
-        }
-    }
-
-    private void flipChoiceMade() {
-        choiceMade.set(!choiceMade.get());
-    }
-
-
-    public void makeDefaultBusinessDecision() {
-        var game = gameController.getGame();
-        var company = game.getCompany();
-
-        game.flipIsDecisionRound();
-        flipChoiceMade();
-        company.makeBusinessDecision("choiceFour", game);
-        removeDecisionPage();
-        showSummaryPage("choiceFour");
+        updateScenarioDescription();
+        updateChoiceButtons();
+        anchorPane.getChildren().add(scenarioDescription);
+        anchorPane.getChildren().add(choiceOne);
+        anchorPane.getChildren().add(choiceTwo);
+        anchorPane.getChildren().add(choiceThree);
+        anchorPane.getChildren().add(choiceFour);
     }
 
     private void showSummaryPage(String id) {
@@ -448,18 +460,7 @@ public class GamePresenter extends GameObserver {
                 + ",\n for a total of " + daysBetween + " days";
 
         endGameTextField.setText(endGameText);
-        endGameTextField.setLayoutX(41.5);
-        endGameTextField.setLayoutY(255.0);
-        endGameTextField.setPrefHeight(100.0);
-        endGameTextField.setPrefWidth(350.0);
         anchorPane.getChildren().add(endGameTextField);
-
-        newGame.setLayoutX(41.5);
-        newGame.setLayoutY(469.0);
-        newGame.setPrefHeight(70.0);
-        newGame.setPrefWidth(325.0);
-        newGame.setOnAction(this::clickNextGame);
-        newGame.setText("New game!");
         anchorPane.getChildren().add(newGame);
     }
     private void clickNextGame(ActionEvent event) {
@@ -547,14 +548,10 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().remove(scenarioDescription);
     }
     private void spawnTimer() {
+        var progress = new AtomicReference<>((double) 0);
 
-        progressBar.setLayoutX(51.0);
-        progressBar.setLayoutY(557.0);
-        progressBar.setPrefHeight(20.0);
-        progressBar.setPrefWidth(303.0);
-        progressBar.setProgress(0);
+
         progress.set(0.);
-
 
         if (checkGameDone()) {
 

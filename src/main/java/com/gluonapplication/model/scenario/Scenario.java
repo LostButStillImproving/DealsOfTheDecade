@@ -11,13 +11,14 @@ public class Scenario {
     private final Integer ID;
 
     private String scenarioIDForImage;
-    public Scenario(String scenarioTextDescription, Integer id) {
-        this.ID = id;
-        scenarioText = scenarioTextDescription;
-    }
 
     public Scenario(String scenarioTextDescription) {
         this.ID = null;
+        scenarioText = scenarioTextDescription;
+    }
+
+    public Scenario(String scenarioTextDescription, Integer id) {
+        this.ID = id;
         scenarioText = scenarioTextDescription;
     }
 
@@ -27,12 +28,12 @@ public class Scenario {
         scenarioText = scenarioTextDescription;
     }
 
-    public String getScenarioIDForImage() {
-        return scenarioIDForImage;
-    }
-
     public void addChoice(Choice choice) {
         this.choices.add(choice);
+    }
+
+    public String getScenarioIDForImage() {
+        return scenarioIDForImage;
     }
 
     public String getScenarioText() {

@@ -1,29 +1,27 @@
 package com.gluonapplication.model.choice;
 
-import com.gluonapplication.views.GamePresenter;
-
-import java.awt.*;
-import java.io.File;
+import java.util.Random;
 
 public class Choice {
 
     private final String description;
-    private final Double budgetEffect; // multiplicative
+    private Double budgetEffect; // multiplicative
     private final Double repEffect;  // additive
     private final Double IQEffect; // additive
     private final Double IQLimit; // FIND online grænser for dumme dyr og smarte mennesker
     private final String summary;
-    private Double layoutX;
-    private Double layoutY;
-    private Double prefWidth;
-    private Double prefHeight;
+    private String methodToBeApplied;
+    private Double layoutXForImage;
+    private Double layoutYForImage;
+    private Double prefWidthOfImage;
+    private Double prefHeightOfImage;
     private String imageName;
 
-    private String fieldName;
-
     private Integer unlocksScenarioID;
+    private String nodeID;
 
-    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary, String imageName, String fieldName) {
+    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect,
+                  Double IQLimit, String summary, String imageName, String nodeID) {
         this.description = description;
         this.budgetEffect = budgetEffect;
         this.repEffect = repEffect;
@@ -31,10 +29,11 @@ public class Choice {
         this.IQLimit = IQLimit;
         this.summary = summary;
         this.imageName = imageName;
-        this.fieldName = fieldName;
+        this.nodeID = nodeID;
     }
 
-    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit,String summary,Integer unlocksScenarioID, String imageName, String fieldName) {
+    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect,
+                  Double IQLimit,String summary, Integer unlocksScenarioID, String imageName, String nodeID) {
         this.description = description;
         this.budgetEffect = budgetEffect;
         this.repEffect = repEffect;
@@ -42,26 +41,33 @@ public class Choice {
         this.IQLimit = IQLimit;
         this.summary = summary;
         this.imageName = imageName;
-        this.fieldName = fieldName;
+        this.nodeID = nodeID;
         this.unlocksScenarioID = unlocksScenarioID;
     }
 
-
-
-    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary) {
+    public Choice(String description, Double budgetEffect, Double repEffect,
+                  Double IQEffect, Double IQLimit, String summary) {
         this.description = description;
         this.budgetEffect = budgetEffect;
         this.repEffect = repEffect;
         this.IQEffect = IQEffect;
         this.IQLimit = IQLimit;
         this.summary = summary;
+
+    } public Choice(String description, String methodToBeApplied, Double repEffect,
+                  Double IQEffect, Double IQLimit, String summary) {
+        this.description = description;
+        this.methodToBeApplied = methodToBeApplied;
+        this.repEffect = repEffect;
+        this.IQEffect = IQEffect;
+        this.IQLimit = IQLimit;
+        this.summary = summary;
     }
 
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect, Double IQLimit, String summary, Integer unlocksScenarioID) {
+    public Choice(String description, Double budgetEffect, Double repEffect, Double IQEffect,
+                  Double IQLimit, String summary, Integer unlocksScenarioID,
+                  String imageName, String nodeID, double layoutXForImage, double layoutYForImage,
+                  double prefWidthOfImage, double prefHeightOfImage) {
 
         this.description = description;
         this.budgetEffect = budgetEffect;
@@ -70,41 +76,55 @@ public class Choice {
         this.IQLimit = IQLimit;
         this.summary = summary;
         this.unlocksScenarioID = unlocksScenarioID;
+        this.layoutXForImage = layoutXForImage;
+        this.layoutYForImage = layoutYForImage;
+        this.prefHeightOfImage = prefHeightOfImage;
+        this.prefWidthOfImage = prefWidthOfImage;
+        this.imageName = imageName;
+        this.nodeID = nodeID;
+    }
+
+    public Choice(String description, String methodToBeApplied, double repEffect,
+                  double iqEffect, double iqLimit, String summary, String imageName, String nodeID) {
+        this.description = description;
+        this.methodToBeApplied = methodToBeApplied;
+        this.repEffect = repEffect;
+        this.IQEffect = iqEffect;
+        this.IQLimit = iqLimit;
+        this.summary = summary;
+        this.imageName = imageName;
+        this.nodeID = nodeID;
+
+    }
+
+    public Choice(String description, String methodToBeApplied, double repEffect,
+                  double iqEffect, double iqLimit, String summary, String imageName, String nodeID, double layoutXForImage, double layoutYForImage,
+                  double prefWidthOfImage, double prefHeightOfImage) {
+
+        this.description = description;
+        this.methodToBeApplied = methodToBeApplied;
+        this.repEffect = repEffect;
+        this.IQEffect = iqEffect;
+        this.IQLimit = iqLimit;
+        this.summary = summary;
+        this.imageName = imageName;
+        this.prefWidthOfImage = prefWidthOfImage;
+        this.prefHeightOfImage = prefHeightOfImage;
+        this.layoutXForImage = layoutXForImage;
+        this.layoutYForImage = layoutYForImage;
+        this.nodeID = nodeID;
     }
 
     public Double getLayoutX() {
-        return layoutX;
+        return layoutXForImage;
     }
 
     public Double getLayoutY() {
-        return layoutY;
+        return layoutYForImage;
     }
 
     public String getImageName() {
         return imageName;
-    }
-
-    public Choice(String description,
-                  Double budgetEffect,
-                  Double repEffect,
-                  Double IQEffect,
-                  Double IQLimit,
-                  String summary,
-                  Integer unlocksScenarioID,
-                  String imageName, double layoutX, double layoutY, double prefWidth, double prefHeight) {
-
-        this.description = description;
-        this.budgetEffect = budgetEffect;
-        this.repEffect = repEffect;
-        this.IQEffect = IQEffect;
-        this.IQLimit = IQLimit;
-        this.summary = summary;
-        this.unlocksScenarioID = unlocksScenarioID;
-        this.layoutX = layoutX;
-        this.layoutY = layoutY;
-        this.prefHeight = prefHeight;
-        this.prefWidth = prefWidth;
-        this.imageName = imageName;
     }
 
     public String getDescription() {
@@ -136,11 +156,28 @@ public class Choice {
     }
 
     public Double getPrefWidth() {
-        return prefWidth;
+        return prefWidthOfImage;
     }
 
     public Double getPrefHeight() {
-        return prefHeight;
+        return prefHeightOfImage;
+    }
+
+    public String getMethodToBeApplied() {
+        return methodToBeApplied;
+    }
+
+    public void calculateReward(Double investedAmount) {
+
+        Random random = new Random();
+        Double multiplier = random.nextDouble() * 3;
+        var result = investedAmount * multiplier;
+        System.out.println(multiplier);
+        this.budgetEffect = (result - investedAmount);
+    }
+
+    public String getNodeID() {
+        return this.nodeID;
     }
 }
 
