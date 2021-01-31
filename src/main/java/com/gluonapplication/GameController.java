@@ -4,6 +4,7 @@ import com.gluonapplication.model.Game;
 
 
 public class GameController {
+    public String companyName;
 
     public Game game;
 
@@ -12,7 +13,8 @@ public class GameController {
         return game;
     }
 
-    public GameController(String companyType) {
+    public GameController(String companyName, String companyType) {
+        this.companyName = companyName;
         game = new Game(companyType);
         t1.start();
     }

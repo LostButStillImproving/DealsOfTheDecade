@@ -1,10 +1,13 @@
 package com.gluonapplication.model;
 
+import com.gluonapplication.GameController;
+import com.gluonapplication.data.Connect;
 import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
 import com.gluonapplication.model.scenario.ScenarioBuilder;
+import com.gluonapplication.views.GamePresenter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -85,8 +88,6 @@ public class Game implements Runnable {
     public void flipIsDecisionRound() {
         decisionRound = !decisionRound;
     }
-
-
 
     @Override
     public void run() {

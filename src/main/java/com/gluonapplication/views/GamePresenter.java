@@ -1,6 +1,7 @@
 package com.gluonapplication.views;
 
 import com.gluonapplication.GameController;
+import com.gluonapplication.data.Connect;
 import com.gluonapplication.model.Game;
 import com.gluonapplication.model.choice.Choice;
 import com.gluonapplication.model.company.GameObserver;
@@ -32,6 +33,7 @@ public class GamePresenter extends GameObserver {
     //START PAGE NODES
     private final Button startGame = new Button();
     private final Button newGame = new Button();
+    private final TextField companyNameField = new TextField("Company name..");
     private final AtomicBoolean choiceMade = new AtomicBoolean(false);
     private final ToggleButton difficultyEasyToggle = new ToggleButton();
     private final ToggleButton difficultyMediumToggle = new ToggleButton();
@@ -55,14 +57,14 @@ public class GamePresenter extends GameObserver {
     private AnchorPane anchorPane;
     //GRAPHICS
 
-    private ImageView cityGraphics = new ImageView();
+    private final ImageView cityGraphics = new ImageView();
     @FXML
     private ImageView reputationImage;
     private final ImageView companyImage = new ImageView();
 
     private final ImageView moonImage = new ImageView();
 
-    private ImageView overlay = new ImageView();
+    private final ImageView overlay = new ImageView();
     @FXML
     private Label budgetField;
     @FXML
@@ -82,16 +84,14 @@ public class GamePresenter extends GameObserver {
                 appBar.setTitleText("Deals of The Decade");
             }
         });
+        difficulty.getToggles().add(difficultyEasyToggle);
+        difficulty.getToggles().add(difficultyMediumToggle);
+        difficulty.getToggles().add(difficultyHardToggle);
         constructButtonsAndLabels();
-
         buildStartPage();
     }
 
     private void buildStartPage() {
-
-        difficulty.getToggles().add(difficultyEasyToggle);
-        difficulty.getToggles().add(difficultyMediumToggle);
-        difficulty.getToggles().add(difficultyHardToggle);
 
         File moonFile = new File("src/main/resources/graphics/events/regularMoon.png");
         Image imageMoon = new Image(moonFile.toURI().toString());
@@ -101,6 +101,7 @@ public class GamePresenter extends GameObserver {
         moonImage.setFitHeight(30);
         moonImage.setFitWidth(30);
         moonImage.setId("moonImage");
+        moonImage.toFront();
         anchorPane.getChildren().add(moonImage);
 
         File fileCity = new File("src/main/resources/graphics/city/city.png");
@@ -123,9 +124,9 @@ public class GamePresenter extends GameObserver {
         companyImage.setFitWidth(82.);
         companyImage.setFitHeight(43.);
         companyImage.setImage((imageCompany));
+        companyImage.toFront();
         anchorPane.getChildren().add(companyImage);
 
-        companyImage.toFront();
         gameDescription.setText("                Welcome to Deals Of The Decade!\n\nIn this game you'll be asked to make\nsome hard hitting decisions\n\nDon't let your budget hit zero, or you lose");
         gameDescription.setLayoutX(41.5);
         gameDescription.setLayoutY(255.0);
@@ -192,6 +193,11 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().add(difficultyMediumToggle);
         anchorPane.getChildren().add(difficultyHardToggle);
 
+
+        companyNameField.setLayoutY(390);
+        companyNameField.setLayoutX(42.5);
+        anchorPane.getChildren().add(companyNameField);
+
         startGame.setText("Start Game!");
         startGame.getStyleClass().add("selected");
         startGame.setLayoutX(41.5);
@@ -203,23 +209,30 @@ public class GamePresenter extends GameObserver {
         anchorPane.getChildren().add(startGame);
     }
 
+    private void removeStartPage() {
+        anchorPane.getChildren().remove(gameDescription);
+        anchorPane.getChildren().remove(startGame);
+        anchorPane.getChildren().remove(companyNameField);
+        anchorPane.getChildren().remove(difficultyEasyToggle);
+        anchorPane.getChildren().remove(difficultyMediumToggle);
+        anchorPane.getChildren().remove(difficultyHardToggle);
+        anchorPane.getChildren().remove(moonImage);
+    }
+
     private void initializeGame() {
 
 
         budgetField.setStyle("-fx-text-fill: black");
-        anchorPane.getChildren().remove(gameDescription);
-        anchorPane.getChildren().remove(startGame);
-        anchorPane.getChildren().remove(difficultyEasyToggle);
-        anchorPane.getChildren().remove(difficultyMediumToggle);
-        anchorPane.getChildren().remove(difficultyHardToggle);
         Toggle difficultySelectedToggle = difficulty.getSelectedToggle();
 
         if (difficultySelectedToggle == null) {
-            gameController = new GameController("SMALL");
-        } else gameController = new GameController((String) difficultySelectedToggle.getUserData());
+            gameController = new GameController(companyNameField.getText(), "SMALL");
+        } else gameController = new GameController(companyNameField.getText(), (String) difficultySelectedToggle.getUserData());
 
         this.game = gameController.getGame();
         game.attach(this);
+
+        removeStartPage();
 
         decisionNodes.add(businessDecision);
         decisionNodes.add(scenarioDescription);
@@ -244,6 +257,9 @@ public class GamePresenter extends GameObserver {
 
         t2.start();
     }
+
+
+
 
     private void constructButtonsAndLabels() {
 
@@ -399,10 +415,10 @@ public class GamePresenter extends GameObserver {
         }
         if (choice.getImageName() != null & choice.getLayoutX() !=  null) {
             createImageAndSet(   choice.getImageName(), choice.getNodeID(),
-                                    choice.getLayoutX(),
-                                    choice.getLayoutY(),
-                                  choice.getPrefWidth(),
-                                  choice.getPrefHeight());
+                    choice.getLayoutX(),
+                    choice.getLayoutY(),
+                    choice.getPrefWidth(),
+                    choice.getPrefHeight());
         }
 
 
@@ -462,6 +478,12 @@ public class GamePresenter extends GameObserver {
         endGameTextField.setText(endGameText);
         anchorPane.getChildren().add(endGameTextField);
         anchorPane.getChildren().add(newGame);
+        saveToDB((int)daysBetween);
+    }
+
+    public void saveToDB(int days) {
+        String companyName = companyNameField.getText();
+        Connect.insert(companyName, days);
     }
     private void clickNextGame(ActionEvent event) {
         tearDown();
@@ -471,6 +493,7 @@ public class GamePresenter extends GameObserver {
     private void tearDown() {
         flipChoiceMade();
         anchorPane.getChildren().removeIf(i -> i.getId() == null);
+        anchorPane.getChildren().remove(cityGraphics);
     }
 
     private void removeDecisionPage() {
@@ -485,6 +508,8 @@ public class GamePresenter extends GameObserver {
             anchorPane.getChildren().remove(progressBar);
         });
     }
+
+
 
     public void clickSummaryContinue(Event event) {
         /* DONT DO THIS
@@ -559,9 +584,7 @@ public class GamePresenter extends GameObserver {
         }
         Thread t = new Thread(() -> {
 
-            Platform.runLater(() ->{
-                anchorPane.getChildren().add(progressBar);
-            });
+            Platform.runLater(() -> anchorPane.getChildren().add(progressBar));
 
             while (true) {
                 if (choiceMade.get()) {
@@ -647,13 +670,19 @@ public class GamePresenter extends GameObserver {
     }
 
     private void updateDateField() {
+        dateField.toFront();
         dateField.setText(gameController.getGame().getDate().toString());
+
     }
 
     private void updateRepIcon() {
+
+        System.out.println("update rep icon");
+        reputationImage.toFront();
         double reputation = gameController.getGame().getCompany().getReputation();
         if (reputation <= 1.0) {
             File file = new File("src/main/resources/graphics/reputation/veryangry.png");
+            System.out.println("reputation");
             Image image = new Image(file.toURI().toString());
             reputationImage.setImage(image);
         } else if (reputation <= 2.0) {
@@ -676,6 +705,7 @@ public class GamePresenter extends GameObserver {
     }
 
     private void updateBudgetField() {
+        budgetField.toFront();
         budgetField.setText(game.getCompany().getBudget().get() + "$");
     }
 
