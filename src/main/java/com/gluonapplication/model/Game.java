@@ -1,13 +1,10 @@
 package com.gluonapplication.model;
 
-import com.gluonapplication.GameController;
-import com.gluonapplication.data.Connect;
 import com.gluonapplication.model.company.Company;
 import com.gluonapplication.model.company.CompanyFactory;
 import com.gluonapplication.model.company.GameObserver;
 import com.gluonapplication.model.scenario.Scenario;
 import com.gluonapplication.model.scenario.ScenarioBuilder;
-import com.gluonapplication.views.GamePresenter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,11 +67,31 @@ public class Game implements Runnable {
     }
 
     public Boolean gameDone() {
-        return getCompany().getBudget().get() < 0;
+        return getBudget() < 0;
     }
 
     public Company getCompany() {
         return this.company;
+    }
+
+    public int getBudget() {
+        return this.company.getBudget().get();
+    }
+
+    public String getScenarioText() {
+        return currentScenario.getScenarioText();
+    }
+
+    public String getChoiceDescription(int i) {
+        return currentScenario.getChoiceDescription(i);
+    }
+
+    public String getSummary(int i) {
+        return getCurrentScenario().getChoices().get(i).getSummary();
+    }
+
+    public Double getReputation() {
+        return this.company.getReputation();
     }
 
     public LocalDate getDate() {
@@ -108,5 +125,10 @@ public class Game implements Runnable {
                 notifyAllObservers();
             }
         } while (!gameDone());
+    }
+
+    public double getBudgetConstant() {
+
+        return company.getBudgetConstant();
     }
 }

@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MediumCompany implements Company {
 
+
     private final Double budgetConstant = 0.1;
     private final AtomicInteger budget = new AtomicInteger(10000);
     private int IQ = 110;
@@ -20,7 +21,6 @@ public class MediumCompany implements Company {
     @Override
     public void updateBudgetConstant() {
     }
-
     @Override
     public synchronized void updateBudget() {
         budget.incrementAndGet();

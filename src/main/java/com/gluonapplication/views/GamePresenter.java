@@ -30,6 +30,7 @@ import static java.lang.Thread.sleep;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GamePresenter extends GameObserver {
+
     //START PAGE NODES
     private final Button startGame = new Button();
     private final Button newGame = new Button();
@@ -635,7 +636,7 @@ public class GamePresenter extends GameObserver {
         double sizeRatioWidth  = cityGraphics.getFitWidth()/526;
 
 
-        if (gameController.getGame().getCompany().getBudgetConstant() <= 1.1) {
+        if (game.getBudgetConstant() <= 1.1) {
 
             File file = new File("src/main/resources/graphics/company/smallCompany.png");
             Image image = new Image(file.toURI().toString());
@@ -643,7 +644,7 @@ public class GamePresenter extends GameObserver {
             companyImage.setFitWidth(82. * sizeRatioWidth);
             companyImage.setFitHeight(43. * sizeRatioHeight);
 
-        } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.2) {
+        } else if (game.getBudgetConstant() <= 1.2) {
 
             File file = new File("src/main/resources/graphics/company/smallNiceCompany.png");
             Image image = new Image(file.toURI().toString());
@@ -651,7 +652,7 @@ public class GamePresenter extends GameObserver {
             companyImage.setFitWidth(82. * sizeRatioWidth);
             companyImage.setFitHeight(43. * sizeRatioHeight);
 
-        } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.3) {
+        } else if (game.getBudgetConstant() <= 1.3) {
 
             File file = new File("src/main/resources/graphics/company/mediumCompany.png");
             Image image = new Image(file.toURI().toString());
@@ -659,7 +660,7 @@ public class GamePresenter extends GameObserver {
             companyImage.setFitWidth(120. * sizeRatioWidth);
             companyImage.setFitHeight(74. * sizeRatioHeight);
 
-        } else if (gameController.getGame().getCompany().getBudgetConstant() <= 1.4) {
+        } else if (game.getBudgetConstant() <= 1.4) {
 
             File file = new File("src/main/resources/graphics/company/largeCompany.png");
             Image image = new Image(file.toURI().toString());
@@ -671,7 +672,7 @@ public class GamePresenter extends GameObserver {
 
     private void updateDateField() {
         dateField.toFront();
-        dateField.setText(gameController.getGame().getDate().toString());
+        dateField.setText(game.getDate().toString());
 
     }
 
@@ -679,7 +680,8 @@ public class GamePresenter extends GameObserver {
 
         System.out.println("update rep icon");
         reputationImage.toFront();
-        double reputation = gameController.getGame().getCompany().getReputation();
+        double reputation = game.getReputation();
+
         if (reputation <= 1.0) {
             File file = new File("src/main/resources/graphics/reputation/veryangry.png");
             System.out.println("reputation");
@@ -706,7 +708,7 @@ public class GamePresenter extends GameObserver {
 
     private void updateBudgetField() {
         budgetField.toFront();
-        budgetField.setText(game.getCompany().getBudget().get() + "$");
+        budgetField.setText(game.getBudget() + "$");
     }
 
     private void updateScenarioDescription() {
@@ -723,14 +725,14 @@ public class GamePresenter extends GameObserver {
     }
 
     private String getScenarioText() {
-        return gameController.getGame().getCurrentScenario().getScenarioText();
+        return game.getScenarioText();
     }
 
     private String getChoiceDescription(int i) {
-        return gameController.getGame().getCurrentScenario().getChoices().get(i).getDescription();
+        return game.getChoiceDescription(i);
     }
 
     private String getSummary(int i) {
-        return gameController.getGame().getCurrentScenario().getChoices().get(i).getSummary();
+        return game.getSummary(i);
     }
 }

@@ -47,4 +47,8 @@ public class Scenario {
     public Integer getID() {
         return ID;
     }
+
+    public String getChoiceDescription(int i) {
+        return this.getChoices().get(i).getDescription();
+    }
 }

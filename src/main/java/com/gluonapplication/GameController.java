@@ -19,6 +19,6 @@ public class GameController {
         t1.start();
     }
 
+    
     public Thread t1 = new Thread(() -> game.run());
-
 }
